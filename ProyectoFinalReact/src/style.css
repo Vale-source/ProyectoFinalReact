@@ -1,0 +1,123 @@
+/* Estilos para el contenedor principal */
+.parent {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr; /* Define las columnas de la cuadrícula */
+    grid-template-rows: 100px 2fr 1fr 1fr 1fr; /* Define las filas de la cuadrícula */
+    grid-column-gap: 0px; /* Espacio entre columnas */
+    grid-row-gap: 0px; /* Espacio entre filas */
+    width: 100vw; /* Ancho del contenedor */
+    height: 100vh; /* Alto del contenedor */
+    position: fixed; /* Fija el contenedor en la pantalla */
+    top: 0; /* Posición superior */
+    left: 0; /* Posición izquierda */
+    margin: 0; /* Sin margen */
+}
+
+/* Estilos para el aside general */
+.asideGeneral {
+    grid-area: 1 / 1 / 6 / 2; /* Área de la cuadrícula que ocupa */
+    display: flex; /* Usa flexbox para el contenido interno */
+    flex-direction: column; /* Dirección de los elementos internos */
+    gap: 10px; /* Espacio entre elementos internos */
+    background-color: rgb(40, 39, 39); /* Color de fondo */
+    color: white; /* Color del texto */
+    text-align: center; /* Alineación del texto */
+    padding: 40px; /* Relleno interno */
+}
+
+/* Estilos para los encabezados dentro del aside general */
+.asideGeneral h1 {
+    text-shadow:
+    4px 4px 0px black, 
+    -4px -4px 0px black, 
+    4px -4px 0px black,  
+    -4px 4px 0px black; /* Sombra del texto */
+}
+
+/* Estilos para los botones dentro del aside general */
+.asideGeneral button {
+    border-radius: 30px; /* Bordes redondeados */
+    height: 35px; /* Altura del botón */
+    width: 200px; /* Ancho del botón */
+    border: 1px solid black; /* Borde del botón */
+    margin-top: 10px; /* Margen superior */
+    margin-bottom: 10px; /* Margen inferior */
+    background-color: gray; /* Color de fondo */
+    color: white; /* Color del texto */
+    font-size: 19px; /* Tamaño de la fuente */
+    text-shadow:
+    1px 1px 0px black,  
+    -1px -1px 0px black, 
+    1px -1px 0px black,  
+    -1px 1px 0px black; /* Sombra del texto */
+}
+
+/* Estilos para la barra de navegación general */
+.NavBarGeneral {
+    grid-area: 1 / 2 / 2 / 6; /* Área de la cuadrícula que ocupa */
+    background-color: black; /* Color de fondo */
+    height: 100px; /* Altura de la barra */
+    display: flex; /* Usa flexbox para el contenido interno */
+    align-items: center; /* Alineación vertical de los elementos */
+    justify-content: center; /* Alineación horizontal de los elementos */
+    gap: 50px; /* Espacio entre elementos internos */
+}
+
+/* Estilos para los encabezados dentro de la barra de navegación */
+.NavBarGeneral h1 {
+    color: white; /* Color del texto */
+}
+
+/* Estilos para los botones dentro de la barra de navegación */
+.NavBarGeneral button {
+    border-radius: 30px; /* Bordes redondeados */
+    height: 35px; /* Altura del botón */
+    width: 200px; /* Ancho del botón */
+    border: 1px solid rgb(255, 255, 255); /* Borde del botón */
+    margin-top: 10px; /* Margen superior */
+    margin-bottom: 10px; /* Margen inferior */
+    background-color: black; /* Color de fondo */
+    color: white; /* Color del texto */
+    font-size: 19px; /* Tamaño de la fuente */
+}
+
+/* Estilos para el cuerpo principal */
+.cuerpoPrincipal {
+    grid-area: 2 / 2 / 6 / 6; /* Área de la cuadrícula que ocupa */
+    position: relative; /* Posición relativa */
+    height: 100%; /* Altura completa */
+}
+
+/* Estilos para el fondo desenfocado */
+.background-blur {
+    background-image: url('./img/ocio-nocturno-asturias-scaled.jpg.webp'); /* Imagen de fondo */
+    background-size: cover; /* Cubrir todo el contenedor */
+    background-position: center; /* Centrar la imagen */
+    background-repeat: no-repeat; /* No repetir la imagen */
+    filter: blur(2px); /* Aplicar desenfoque */
+    position: absolute; /* Posición absoluta */
+    top: 0; /* Posición superior */
+    left: 0; /* Posición izquierda */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    z-index: 1; /* Nivel de apilamiento */
+}
+
+/* Estilos para el contenido */
+.content {
+    position: relative; /* Posición relativa */
+    z-index: 2; /* Nivel de apilamiento */
+    display: flex; /* Usa flexbox para el contenido interno */
+    text-align: center; /* Alineación del texto */
+}
+
+/* Estilos para la carta de sucursal */
+.cartaSucursal {
+    height: 300px; /* Altura de la carta */
+    width: 200px; /* Ancho de la carta */
+    margin: 100px; /* Margen alrededor de la carta */
+    background-color: gray; /* Color de fondo */
+    border-radius: 20px; /* Bordes redondeados */
+    border: 2px solid black; /* Borde de la carta */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra de la carta */
+}
