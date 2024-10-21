@@ -1,10 +1,2 @@
-# ProyectoFinalReact
-Repositorio del trabajo final de segundo semestre con React. Grupo: Señores de la Runa
+Creando el Aside con las empresas y las funcionalidades de agregar empresa, editar empresa y eliminar empresa con redux
 
-Integrantes {
-  NelKitsune: Ramiro Ferrari,
-  Vale-Source: Valentin Curiel,
-  Mercetet: Mercedes Tetilla,
-  RodrigoRomer26: Rodrigo Romero,
-  PRV47: Piers Rideout
-}
