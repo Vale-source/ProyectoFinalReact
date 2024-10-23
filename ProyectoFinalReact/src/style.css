@@ -28,10 +28,10 @@
 /* Estilos para los encabezados dentro del aside general */
 .asideGeneral h1 {
     text-shadow:
-    4px 4px 0px black, 
-    -4px -4px 0px black, 
-    4px -4px 0px black,  
-    -4px 4px 0px black; /* Sombra del texto */
+        4px 4px 0px black,
+        -4px -4px 0px black,
+        4px -4px 0px black,
+        -4px 4px 0px black; /* Sombra del texto */
 }
 
 /* Estilos para los botones dentro del aside general */
@@ -46,10 +46,13 @@
     color: white; /* Color del texto */
     font-size: 19px; /* Tamaño de la fuente */
     text-shadow:
-    1px 1px 0px black,  
-    -1px -1px 0px black, 
-    1px -1px 0px black,  
-    -1px 1px 0px black; /* Sombra del texto */
+        1px 1px 0px black,
+        -1px -1px 0px black,
+        1px -1px 0px black,
+        -1px 1px 0px black; /* Sombra del texto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Estilos para la barra de navegación general */
@@ -79,6 +82,9 @@
     background-color: black; /* Color de fondo */
     color: white; /* Color del texto */
     font-size: 19px; /* Tamaño de la fuente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Estilos para el cuerpo principal */
@@ -121,3 +127,183 @@
     border: 2px solid black; /* Borde de la carta */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra de la carta */
 }
+
+/*------------crear sucursal--------------*/
+.popUpCrearUnaSucursal {
+    width: 1150px;
+    height: 600px;
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    border: 2px solid white;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.popUpCrearUnaSucursal h1 {
+    grid-column: span 3;
+    margin-bottom: 20px;
+}
+
+.popUpCrearUnaSucursal form {
+    display: contents;
+}
+
+.popUpCrearUnaSucursal input,
+.popUpCrearUnaSucursal select {
+    border-radius: 10px;
+    width: 100%;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border: 1px solid white;
+    height: 50px;
+    text-align: center;
+    align-items: center;
+}
+
+.popUpCrearUnaSucursal input[type="checkbox"] {
+    width: auto;
+}
+
+
+.divBotones {
+    grid-column: span 3;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.divBotones .btn {
+    border-radius: 10px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease; /* Añade una transición suave */
+}
+
+.btn-success {
+    background-color: green !important; /* Usa !important para asegurar que el color se aplique */
+    color: white !important;
+}
+
+.btn-danger {
+    background-color: red !important; /* Usa !important para asegurar que el color se aplique */
+    color: white !important;
+}
+
+/* Clases de área de la cuadrícula para el formulario de crear sucursal */
+.div1 {
+    grid-area: 1 / 1 / 2 / 4;
+}
+
+.div2 {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+.div3 {
+    grid-area: 3 / 1 / 4 / 2;
+}
+
+.div4 {
+    grid-area: 4 / 1 / 5 / 2;
+}
+
+.div5 {
+    grid-area: 5 / 1 / 6 / 2;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.div6 {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.div7 {
+    grid-area: 3 / 2 / 4 / 3;
+}
+
+.div8 {
+    grid-area: 4 / 2 / 5 / 3;
+}
+
+.div9 {
+    grid-area: 5 / 2 / 6 / 3;
+}
+
+.div10 {
+    grid-area: 6 / 2 / 7 / 3;
+}
+
+.div11 {
+    grid-area: 2 / 3 / 3 / 4;
+}
+
+.div12 {
+    grid-area: 3 / 3 / 4 / 4;
+}
+
+.div13 {
+    grid-area: 4 / 3 / 5 / 4;
+}
+
+.div14 {
+    grid-area: 5 / 3 / 6 / 4;
+}
+
+.div15 {
+    grid-area: 6 / 3 / 7 / 4;
+}
+
+.div16 {
+    grid-area: 7 / 2 / 9 / 3;
+    width: 400px;
+}
+
+.div17 {
+    grid-area: 9 / 1 / 10 / 2;
+}
+
+.div18 {
+    grid-area: 9 / 3 / 10 / 4;
+}
+/*----------fin crear sucursal------------*/
+
+/*-----------cuerpo principal-------------*/
+    .modalVerSucursal{
+        width: 600px;
+        height: 550px;
+        background-color: black;
+        color: white;
+        border-radius: 10px;
+        border: 2px solid white;
+        padding: 20px;
+        box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+    }
+    .infoModalVerSucursal{
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+    }
+/*---------fin cuerpo principal-----------*/
