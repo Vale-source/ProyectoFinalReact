@@ -1,60 +1,85 @@
-import React, { useState } from 'react'
-import CrearSucursal from './CrearSucursal'
+import React, { useState } from 'react';
+import CrearSucursal from './CrearSucursal'; // Importar el componente CrearSucursal
+import { useDispatch } from 'react-redux';
+import { agregarSucursal } from './sucursalesSlice'; // Importar la acción para agregar una sucursal
 
 const NavBar = () => {
+    // Valores iniciales para el formulario de sucursal
+    const initialValues = {
+        id: 0,
+        nombreSucursal: '',
+        selecPais: '',
+        selecLocalidad: '',
+        longitud: 0,
+        timeAper: '',
+        selcProvincia: '',
+        latitud: 0,
+        codigoPostal: 0,
+        timeCierre: '',
+        nombreCalle: '',
+        numeroCalle: 0,
+        numeroPiso: 0,
+        numeroDepartamento: 0,
+        urlImagen: '',
+        habilitado: false
+    };
+
+    // Interfaz que define la estructura de una sucursal
     interface Sucursal {
-        nombreSucursal: string
-        selecPais: string
-        selecLocalidad: string
-        longitud: number
+        id: number;
+        nombreSucursal: string;
+        selecPais: string;
+        selecLocalidad: string;
+        longitud: number;
         timeAper: string;
         selcProvincia: string;
-        latitud: number
+        latitud: number;
         codigoPostal: number;
         timeCierre: string;
         nombreCalle: string;
         numeroCalle: number;
         numeroPiso: number;
         numeroDepartamento: number;
-        urlImagen:string;
+        urlImagen: string;
         habilitado: boolean;
     }
-    const [showPopup, setShowPopup] = useState(false)
+
+    // Estado para controlar la visibilidad del popup
+    const [showPopup, setShowPopup] = useState(false);
+
+    // Función para cambiar el estado de visibilidad del popup
     const cambiarEstado = () => {
         setShowPopup(!showPopup);
     }
-    const agregarSucursal = (sucursal: Sucursal) => {
-        console.log(sucursal)
-        const nuevaSucursal = { 
-            nombreSucursal: sucursal.nombreSucursal,
-            selecPais: sucursal.selecPais,
-            selecLocalidad: sucursal.selecLocalidad,
-            longitud: sucursal.longitud,
-            timeAper: sucursal.timeAper,
-            selcProvincia: sucursal.selcProvincia,
-            latitud: sucursal.latitud,
-            codigoPostal: sucursal.codigoPostal,
-            timeCierre: sucursal.timeCierre,
-            nombreCalle: sucursal.nombreCalle,
-            numeroCalle: sucursal.numeroCalle,
-            numeroPiso: sucursal.numeroPiso,
-            numeroDepartamento: sucursal.numeroDepartamento,
-            habilitado: sucursal.habilitado,
-            urlImagen: sucursal.urlImagen
-        };
-        setShowPopup(false);
-    }
+
+    // Usar dispatch para enviar acciones al store de Redux
+    const dispatch = useDispatch();
+
+    // Manejar el envío del formulario de sucursal
+    const handleSubmit = (sucursal: Sucursal) => {
+        dispatch(agregarSucursal(sucursal)); // Disparar la acción para agregar la sucursal
+        setShowPopup(false); // Cerrar el popup después de enviar
+    };
+
     return (
         <div className='NavBarGeneral'>
-            <h1>Sucursales en: Nombre Empresa</h1>
-            <button type="button" className="btn btn-outline-secondary" onClick={cambiarEstado}>Agregar Sucursal</button>
-            {showPopup && (
+            <h1>Sucursales en: Nombre Empresa</h1> {/* Título de la barra de navegación */}
+            <button type="button" className="btn btn-outline-secondary" onClick={cambiarEstado}>
+                Agregar Sucursal
+            </button>
+
+            {showPopup && ( // Mostrar el popup si showPopup es verdadero
                 <div className="popup-overlay">
-                    <CrearSucursal onClose={cambiarEstado} onSubmit={agregarSucursal} />
+                    <CrearSucursal
+                        initialValues={initialValues} // Pasar valores iniciales al componente CrearSucursal
+                        onClose={cambiarEstado} // Función para cerrar el popup
+                        onSubmit={handleSubmit} // Función para manejar el envío del formulario
+                    />
                 </div>
             )}
         </div>
-    )
+    );
 }
 
-export default NavBar
+export default NavBar;
+

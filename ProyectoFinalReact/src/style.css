@@ -129,181 +129,195 @@
 }
 
 /*------------crear sucursal--------------*/
+/* Estilos para el popup de creación de sucursal */
 .popUpCrearUnaSucursal {
-    width: 1150px;
-    height: 600px;
-    background-color: black;
-    color: white;
-    border-radius: 10px;
-    border: 2px solid white;
-    text-align: center;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(9, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    justify-items: center;
-    align-items: center;
-    gap: 10px;
-    padding: 20px;
-    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
+    width: 1150px; /* Ancho del popup */
+    height: 600px; /* Alto del popup */
+    background-color: black; /* Color de fondo */
+    color: white; /* Color del texto */
+    border-radius: 10px; /* Bordes redondeados */
+    border: 2px solid white; /* Borde del popup */
+    text-align: center; /* Alineación del texto al centro */
+    display: grid; /* Usa grid para organizar el contenido */
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas de igual ancho */
+    grid-template-rows: repeat(9, 1fr); /* Nueve filas de igual alto */
+    grid-column-gap: 0px; /* Espacio entre columnas */
+    grid-row-gap: 0px; /* Espacio entre filas */
+    justify-items: center; /* Justificación de los elementos en el eje horizontal */
+    align-items: center; /* Alineación de los elementos en el eje vertical */
+    gap: 10px; /* Espacio general entre los elementos */
+    padding: 20px; /* Relleno interno del popup */
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2); /* Sombra alrededor del popup */
+    position: fixed; /* Posiciona el popup de forma fija en la pantalla */
+    top: 50%; /* Alineación vertical en el medio de la pantalla */
+    left: 50%; /* Alineación horizontal en el medio de la pantalla */
+    transform: translate(-50%, -50%); /* Centra el popup utilizando transformación */
+    z-index: 1000; /* Asegura que el popup esté por encima de otros elementos */
 }
 
+/* Estilos para el encabezado dentro del popup de crear sucursal */
 .popUpCrearUnaSucursal h1 {
-    grid-column: span 3;
-    margin-bottom: 20px;
+    grid-column: span 3; /* El encabezado ocupa las tres columnas */
+    margin-bottom: 20px; /* Margen inferior para separar del siguiente elemento */
 }
 
+/* Estilos para el formulario dentro del popup */
 .popUpCrearUnaSucursal form {
-    display: contents;
+    display: contents; /* Mantiene el flujo de grid pero permite personalización interna */
 }
 
+/* Estilos para los campos de entrada y selección dentro del popup */
 .popUpCrearUnaSucursal input,
 .popUpCrearUnaSucursal select {
-    border-radius: 10px;
-    width: 100%;
-    background-color: black;
-    color: white;
-    padding: 10px;
-    border: 1px solid white;
-    height: 50px;
-    text-align: center;
-    align-items: center;
+    border-radius: 10px; /* Bordes redondeados para campos */
+    width: 100%; /* Ancho completo del contenedor */
+    background-color: black; /* Color de fondo de los campos */
+    color: white; /* Color del texto en los campos */
+    padding: 10px; /* Relleno interno de los campos */
+    border: 1px solid white; /* Borde de los campos */
+    height: 50px; /* Altura de los campos */
+    text-align: center; /* Alineación del texto en el centro */
+    align-items: center; /* Alineación de los elementos dentro del campo */
 }
 
+/* Estilos para la casilla de verificación dentro del popup */
 .popUpCrearUnaSucursal input[type="checkbox"] {
-    width: auto;
+    width: auto; /* Ancho automático para el checkbox */
 }
 
-
+/* Estilos para el contenedor de botones dentro del popup */
 .divBotones {
-    grid-column: span 3;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
+    grid-column: span 3; /* El contenedor ocupa las tres columnas */
+    display: flex; /* Usa flexbox para organizar los botones */
+    justify-content: space-between; /* Espacio entre botones */
+    padding: 20px; /* Relleno interno */
 }
 
+/* Estilos para cada botón dentro del contenedor de botones */
 .divBotones .btn {
-    border-radius: 10px;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease; /* Añade una transición suave */
+    border-radius: 10px; /* Bordes redondeados para los botones */
+    padding: 10px 20px; /* Relleno interno de los botones */
+    display: flex; /* Usa flexbox para el contenido de los botones */
+    align-items: center; /* Alineación vertical de los elementos dentro del botón */
+    justify-content: center; /* Alineación horizontal de los elementos dentro del botón */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
 }
 
+/* Estilos para el botón de éxito */
 .btn-success {
-    background-color: green !important; /* Usa !important para asegurar que el color se aplique */
-    color: white !important;
+    background-color: green !important; /* Color de fondo verde */
+    color: white !important; /* Color del texto en blanco */
 }
 
+/* Estilos para el botón de peligro */
 .btn-danger {
-    background-color: red !important; /* Usa !important para asegurar que el color se aplique */
-    color: white !important;
+    background-color: red !important; /* Color de fondo rojo */
+    color: white !important; /* Color del texto en blanco */
 }
 
 /* Clases de área de la cuadrícula para el formulario de crear sucursal */
 .div1 {
-    grid-area: 1 / 1 / 2 / 4;
+    grid-area: 1 / 1 / 2 / 4; /* Define el área en la cuadrícula */
 }
 
 .div2 {
-    grid-area: 2 / 1 / 3 / 2;
+    grid-area: 2 / 1 / 3 / 2; /* Define el área en la cuadrícula */
 }
 
 .div3 {
-    grid-area: 3 / 1 / 4 / 2;
+    grid-area: 3 / 1 / 4 / 2; /* Define el área en la cuadrícula */
 }
 
 .div4 {
-    grid-area: 4 / 1 / 5 / 2;
+    grid-area: 4 / 1 / 5 / 2; /* Define el área en la cuadrícula */
 }
 
 .div5 {
-    grid-area: 5 / 1 / 6 / 2;
-    display: flex;
-    align-items: center;
-    gap: 30px;
+    grid-area: 5 / 1 / 6 / 2; /* Define el área en la cuadrícula */
+    display: flex; /* Usa flexbox para organizar el contenido interno */
+    align-items: center; /* Alineación vertical de los elementos internos */
+    gap: 30px; /* Espacio entre elementos internos */
 }
 
 .div6 {
-    grid-area: 2 / 2 / 3 / 3;
+    grid-area: 2 / 2 / 3 / 3; /* Define el área en la cuadrícula */
 }
 
 .div7 {
-    grid-area: 3 / 2 / 4 / 3;
+    grid-area: 3 / 2 / 4 / 3; /* Define el área en la cuadrícula */
 }
 
 .div8 {
-    grid-area: 4 / 2 / 5 / 3;
+    grid-area: 4 / 2 / 5 / 3; /* Define el área en la cuadrícula */
 }
 
 .div9 {
-    grid-area: 5 / 2 / 6 / 3;
+    grid-area: 5 / 2 / 6 / 3; /* Define el área en la cuadrícula */
 }
 
 .div10 {
-    grid-area: 6 / 2 / 7 / 3;
+    grid-area: 6 / 2 / 7 / 3; /* Define el área en la cuadrícula */
 }
 
 .div11 {
-    grid-area: 2 / 3 / 3 / 4;
+    grid-area: 2 / 3 / 3 / 4; /* Define el área en la cuadrícula */
 }
 
 .div12 {
-    grid-area: 3 / 3 / 4 / 4;
+    grid-area: 3 / 3 / 4 / 4; /* Define el área en la cuadrícula */
 }
 
 .div13 {
-    grid-area: 4 / 3 / 5 / 4;
+    grid-area: 4 / 3 / 5 / 4; /* Define el área en la cuadrícula */
 }
 
 .div14 {
-    grid-area: 5 / 3 / 6 / 4;
+    grid-area: 5 / 3 / 6 / 4; /* Define el área en la cuadrícula */
 }
 
 .div15 {
-    grid-area: 6 / 3 / 7 / 4;
+    grid-area: 6 / 3 / 7 / 4; /* Define el área en la cuadrícula */
 }
 
 .div16 {
-    grid-area: 7 / 2 / 9 / 3;
-    width: 400px;
+    grid-area: 7 / 2 / 9 / 3; /* Define el área en la cuadrícula */
+    width: 400px; /* Ancho fijo */
 }
 
 .div17 {
-    grid-area: 9 / 1 / 10 / 2;
+    grid-area: 9 / 1 / 10 / 2; /* Define el área en la cuadrícula */
 }
 
 .div18 {
-    grid-area: 9 / 3 / 10 / 4;
+    grid-area: 9 / 3 / 10 / 4; /* Define el área en la cuadrícula */
 }
+
 /*----------fin crear sucursal------------*/
 
 /*-----------cuerpo principal-------------*/
-    .modalVerSucursal{
-        width: 600px;
-        height: 550px;
-        background-color: black;
-        color: white;
-        border-radius: 10px;
-        border: 2px solid white;
-        padding: 20px;
-        box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1000;
-    }
-    .infoModalVerSucursal{
-        display: flex;
-        flex-direction: column;
-        align-items: baseline;
-    }
+
+/* Estilos para el modal de ver sucursal */
+.modalVerSucursal {
+    width: 600px; /* Ancho del modal */
+    height: 550px; /* Alto del modal */
+    background-color: black; /* Color de fondo */
+    color: white; /* Color del texto */
+    border-radius: 10px; /* Bordes redondeados */
+    border: 2px solid white; /* Borde del modal */
+    padding: 20px; /* Relleno interno del modal */
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2); /* Sombra alrededor del modal */
+    position: fixed; /* Posiciona el modal de forma fija en la pantalla */
+    top: 50%; /* Alineación vertical en el medio de la pantalla */
+    left: 50%; /* Alineación horizontal en el medio de la pantalla */
+    transform: translate(-50%, -50%); /* Centra el modal utilizando transformación */
+    z-index: 1000; /* Asegura que el modal esté por encima de otros elementos */
+}
+
+/* Estilos para la información dentro del modal de ver sucursal */
+.infoModalVerSucursal {
+    display: flex; /* Usa flexbox para organizar el contenido */
+    flex-direction: column; /* Organiza los elementos en una columna */
+    align-items: baseline; /* Alineación de los elementos a la línea base */
+}
+
 /*---------fin cuerpo principal-----------*/

@@ -1,14 +1,19 @@
-import React, { useState } from 'react'
-import ModalVerSucursal from './ModalVerSucursal'
-import CrearSucursal from './CrearSucursal'
+import React, { useState } from 'react';
+import ModalVerSucursal from './ModalVerSucursal';
+import CrearSucursal from './CrearSucursal';
+import { useDispatch } from 'react-redux';
+import { actualizarSucursal } from './sucursalesSlice';
+
+// Define la interfaz de tipo Sucursal para las propiedades que contendrá
 interface Sucursal {
-    nombreSucursal: string
-    selecPais: string
-    selecLocalidad: string
-    longitud: number
+    id: number;
+    nombreSucursal: string;
+    selecPais: string;
+    selecLocalidad: string;
+    longitud: number;
     timeAper: string;
     selcProvincia: string;
-    latitud: number
+    latitud: number;
     codigoPostal: number;
     timeCierre: string;
     nombreCalle: string;
@@ -19,12 +24,35 @@ interface Sucursal {
     habilitado: boolean;
 }
 
-
+// Componente funcional CartaSucursal que recibe una sucursal como prop
 const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
-    const [showPopupVerSucursal, setShowPopupVerSucursal] = useState(false)
-    const cambiarEstado = () => {
+    // Estados para mostrar los popups de ver y editar sucursal
+    const [showPopupVerSucursal, setShowPopupVerSucursal] = useState(false);
+    const [showPopupEditarSucursal, setShowPopupEditarSucursal] = useState(false);
+    
+    // Hook para despachar acciones de Redux
+    const dispatch = useDispatch();
+    
+    // Función para alternar el estado del popup de edición
+    const cambiarEstadoEditarSucursal = () => {
+        setShowPopupEditarSucursal(!showPopupEditarSucursal);
+    };
+
+    // Función para alternar el estado del popup de visualización
+    const cambiarEstadoVerSucursal = () => {
         setShowPopupVerSucursal(!showPopupVerSucursal);
-    }
+    };
+
+    // Función que maneja la actualización de la sucursal
+    const handleSubmit = (sucursalActualizada: Sucursal) => {
+        // Combina la sucursal actualizada con su ID original
+        const sucursalConId = { ...sucursalActualizada, id: sucursal.id };
+        // Despacha la acción para actualizar la sucursal en el estado global
+        dispatch(actualizarSucursal(sucursalConId));
+        console.log("Sucursal actualizada: ", sucursalConId);
+        // Cierra el popup de edición
+        setShowPopupEditarSucursal(false);
+    };
 
     return (
         <div className="card card-prin" style={{
@@ -39,19 +67,23 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
             color: "white",
             border: "1px solid white",
         }}>
+            {/* Imagen de la sucursal */}
             <img src={sucursal.urlImagen} className="card-img-top" alt="..." style={{
                 width: "170px",
             }} />
             <div className="card-body">
+                {/* Títulos y texto de la sucursal */}
                 <h5 className="card-title">{sucursal.nombreSucursal}</h5>
                 <p className="card-text">Horario Apertura: {sucursal.timeAper}</p>
                 <p className="card-text">Horario Cierre: {sucursal.timeCierre}</p>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: "center",
-                        gap: "30px",
-                    }}>
+                
+                {/* Botones para interactuar con la sucursal */}
+                <div style={{
+                    display: 'flex',
+                    justifyContent: "center",
+                    gap: "30px",
+                }}>
+                    {/* Botón para la función principal (home) */}
                     <button
                         style={{
                             background: 'none',
@@ -78,6 +110,8 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
                             home
                         </span>
                     </button>
+                    
+                    {/* Botón para ver la sucursal */}
                     <button
                         style={{
                             background: 'none',
@@ -93,7 +127,7 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
                         }}
                         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)')}
                         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
-                        onClick={cambiarEstado}
+                        onClick={cambiarEstadoVerSucursal} // Abre el popup para ver la sucursal
                     >
                         <span
                             style={{
@@ -105,6 +139,8 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
                             visibility
                         </span>
                     </button>
+                    
+                    {/* Botón para editar la sucursal */}
                     <button
                         style={{
                             background: 'none',
@@ -120,6 +156,7 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
                         }}
                         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)')}
                         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                        onClick={cambiarEstadoEditarSucursal} // Abre el popup para editar la sucursal
                     >
                         <span
                             style={{
@@ -133,14 +170,21 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
                     </button>
                 </div>
             </div>
+            {/* Mostrar el popup de ver sucursal si está activo */}
             {showPopupVerSucursal && (
                 <div className="popup-overlay">
-                    <ModalVerSucursal onClose={cambiarEstado} sucursal={sucursal}></ModalVerSucursal>
+                    <ModalVerSucursal onClose={cambiarEstadoVerSucursal} sucursal={sucursal} />
                 </div>
             )}
-            <CrearSucursal></CrearSucursal>
+            {/* Mostrar el popup de editar sucursal si está activo */}
+            {showPopupEditarSucursal && (
+                <div className="popup-overlay">
+                    <CrearSucursal initialValues={{ ...sucursal, id: sucursal.id }} onClose={cambiarEstadoEditarSucursal} onSubmit={handleSubmit} />
+                </div>
+            )}
         </div>
     )
 }
 
-export default CartaSucursal
+export default CartaSucursal;
+
