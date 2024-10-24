@@ -1,15 +1,17 @@
-import NavBar from "./components/NavBar";
-import CuerpoPrincipal from "./components/CuerpoPrincipal";
-import AsideEmpresa from "./components/AsideEmpresa";
+
 import { AppRouter } from "./routes/AppRouter";
+
+import NavBarAdmin from "./components/NavBar/NavBarAdmin";
+import BodyAdmin from "./components/MainBody/BodyAdmin";
+import AsideAdmin from "./components/Aside/AsideAdmin";
 
 function App() {
 	return (
 		<div className="parent">
 			<AppRouter />
-			<NavBar />
-			<CuerpoPrincipal />
-			<AsideEmpresa />
+			<NavBarAdmin/>
+			<BodyAdmin />
+			<AsideAdmin />
 		</div>
 	);
 }
