@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CrearSucursal from './CrearSucursal'; // Importar el componente CrearSucursal
+import CrearSucursal from './CrearSucursal/CrearSucursal'; // Importar el componente CrearSucursal
 import { useDispatch } from 'react-redux';
-import { agregarSucursal } from './sucursalesSlice'; // Importar la acción para agregar una sucursal
+import { agregarSucursal } from '../sucursalesSlice'; // Importar la acción para agregar una sucursal
 
 const NavBar = () => {
     // Valores iniciales para el formulario de sucursal

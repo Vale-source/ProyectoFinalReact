@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import ModalVerSucursal from './ModalVerSucursal';
-import CrearSucursal from './CrearSucursal';
+import ModalVerSucursal from './ModalVerSucursal/ModalVerSucursal';
+import CrearSucursal from '../../navBar/CrearSucursal/CrearSucursal';
 import { useDispatch } from 'react-redux';
-import { actualizarSucursal } from './sucursalesSlice';
+import { actualizarSucursal } from '../../sucursalesSlice';
 
 // Define la interfaz de tipo Sucursal para las propiedades que contendrá
 interface Sucursal {
