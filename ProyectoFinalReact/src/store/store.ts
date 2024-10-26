@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import asideSlice from "../Slices/asideSlice/asideSlice";
+import asideSlice from "../features/asideSlice/asideSlice";
+
 // ...
 
 export const store = configureStore({
