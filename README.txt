@@ -1,5 +1,5 @@
-Dentro de la carpeta components:
-|----->	Dentro de la carpeta AsideCompany:
+carpeta/components:
+|----->	carpeta/AsideCompany:
 |	|
 |	|----->	AsideCompany:
 |	|	La funcion de este componente es poder mostrar el modal para agregar empresa. 
@@ -9,7 +9,7 @@ Dentro de la carpeta components:
 |	|----->	ListCompany:
 |		La funcion de este componente es renderizar las cards en el aside y contiene la logica para eliminar empresas
 |
-|----->	Dentro de la carpeta modals:
+|----->	carpeta/modals:
 	|
 	|----->	AsideCompanyEditModal:
 	|	Modal que se abre al querer editar la empresa, contiene toda la logica para 
@@ -21,8 +21,8 @@ Dentro de la carpeta components:
 	|----->	AsideCompanyViewDataModal:
 		Modal que se muestra al querer ver los datos de una empresa
 
-Dentro de la carpeta features:
-|----->	Dentro de la carpeta asideSlice:
+carpeta/features:
+|----->	carpeta/asideSlice:
 	|	
 	|----->	asideSlice:
 		Slice encargado del manejo del aside. Contiene los reducers para agregar, eliminar y editar empresa
