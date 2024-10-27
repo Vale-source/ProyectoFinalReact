@@ -7,6 +7,7 @@ export const store = configureStore({
 	reducer: {
 		asideSlice: asideSlice.reducer
 	}
+
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

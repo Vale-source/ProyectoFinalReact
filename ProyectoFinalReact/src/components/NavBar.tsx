@@ -1,5 +1,3 @@
-
-
 const NavBar = () => {
     return (
         <div className='NavBarGeneral'>

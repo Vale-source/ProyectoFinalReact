@@ -40,6 +40,7 @@
 	align-items: center; /* Alineación vertical de los elementos */
 	justify-content: center; /* Alineación horizontal de los elementos */
 	gap: 50px; /* Espacio entre elementos internos */
+
 }
 
 /* Estilos para los encabezados dentro de la barra de navegación */
@@ -80,7 +81,6 @@
 	width: 100%; /* Ancho completo */
 	height: 100%; /* Altura completa */
 	z-index: 1; /* Nivel de apilamiento */
-}
 
 /* Estilos para el contenido */
 .content {
@@ -101,7 +101,6 @@
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra de la carta */
 }
 
-
 /* Inputs */
 .mb-3 input {
 	background-color: black;
@@ -119,5 +118,3 @@
 	color: white; 
 	border-color: white;
 }
-
-

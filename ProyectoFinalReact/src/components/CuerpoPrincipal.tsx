@@ -1,4 +1,3 @@
-
 const CuerpoPrincipal = () => {
     return (
         <div className='cuerpoPrincipal'>
