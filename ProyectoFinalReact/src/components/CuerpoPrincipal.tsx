@@ -1,5 +1,3 @@
-import React from 'react'
-
 const CuerpoPrincipal = () => {
     return (
         <div className='cuerpoPrincipal'>
