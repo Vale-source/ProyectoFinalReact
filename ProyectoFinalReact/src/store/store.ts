@@ -1,13 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import asideSlice from "../features/asideSlice/asideSlice";
+import sucursalesReducer from '../components/sucursalesSlice';
 
 // ...
 
 export const store = configureStore({
 	reducer: {
-		asideSlice: asideSlice.reducer
-	}
-
+		asideSlice: asideSlice.reducer,
+		sucursales: sucursalesReducer
+	}	
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
