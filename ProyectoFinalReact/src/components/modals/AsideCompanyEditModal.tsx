@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
-import { IPropsEmpresas } from "../AsideCompany/AsideCompany";
+import {  } from "../AsideCompany/AsideCompany";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
-import { editCompany } from "../../features/asideSlice/asideSlice";
+import { editCompany, IPropsEmpresas } from "../../features/asideSlice/asideSlice";
 import Swal from "sweetalert2";
 
 interface IPropsEditData {
@@ -25,6 +25,7 @@ export const AsideCompanyEditModal: FC<IPropsEditData> = ({
 		socialReason: company.socialReason,
 		cuit: company.cuit,
 		image: company.image,
+		sucursales: company.sucursales
 	});
 
 	const handleEditData = (e: React.ChangeEvent<HTMLInputElement>) => {

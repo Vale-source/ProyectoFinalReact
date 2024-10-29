@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import asideSlice from "../features/asideSlice/asideSlice";
-import sucursalesReducer from '../components/sucursalesSlice';
+import sucursalesReducer from '../features/sucursalSlice/sucursalesSlice';
+import conectCompanyBranchSlice from "../features/conectCompanyBranchSlice/conectCompanyBranchSlice";
 
 // ...
 
 export const store = configureStore({
 	reducer: {
 		asideSlice: asideSlice.reducer,
-		sucursales: sucursalesReducer
+		sucursales: sucursalesReducer,
+		conectCompanyBranchSlice: conectCompanyBranchSlice.reducer
 	}	
 });
 

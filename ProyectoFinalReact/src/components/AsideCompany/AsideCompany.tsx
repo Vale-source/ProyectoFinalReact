@@ -1,19 +1,11 @@
 import Swal from "sweetalert2";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
-import { addCompany } from "../../features/asideSlice/asideSlice";
+import { addCompany, IPropsEmpresas } from "../../features/asideSlice/asideSlice";
 import { ListCompany } from "./ListCompany";
 import { AsideCompanyModal } from "../modals/AsideCompanyModal";
 import { RootState } from "../../store/store";
 import { v4 as uuidv4 } from "uuid";
-
-export interface IPropsEmpresas {
-	id: string;
-	name: string;
-	socialReason: string;
-	cuit: number;
-	image: string;
-}
 
 const AsideCompany = () => {
 	const [showModal, setShowModal] = useState(false);
@@ -30,8 +22,9 @@ const AsideCompany = () => {
 		socialReason: "",
 		cuit: 0,
 		image: "",
+		sucursales: []
 	};
-
+	
 	const [activeCompany, setActiveCompany] =
 		useState<IPropsEmpresas>(intialState);
 
@@ -172,12 +165,13 @@ const AsideCompany = () => {
 		dispatch(addCompany(activeCompany));
 		setShowModal(false);
 
-		const initialState = {
+		let initialState = {
 			id: "",
 			name: "",
 			socialReason: "",
 			cuit: 0,
 			image: "",
+			sucursales: []
 		};
 		setActiveCompany(initialState);
 	};

@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { IPropsEmpresas } from "../AsideCompany/AsideCompany";
+import {  } from "../AsideCompany/AsideCompany";
+import { IPropsEmpresas } from "../../features/asideSlice/asideSlice";
 
 interface IPropsAsideViewData {
 	company: IPropsEmpresas | null;

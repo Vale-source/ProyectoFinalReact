@@ -52,7 +52,7 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault(); // Prevenir el comportamiento predeterminado del envío del formulario
 
-        // Validar si el campo "Nombre de la sucursal" está vacío
+        //Validar si el campo "Nombre de la sucursal" está vacío
         if (!sucursal.nombreSucursal) {
             Swal.fire({
                 icon: "error",
@@ -61,7 +61,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "Horario de apertura" está vacío
         if (!sucursal.timeAper) {
             Swal.fire({
@@ -71,7 +70,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "Horario de cierre" está vacío
         if (!sucursal.timeCierre) {
             Swal.fire({
@@ -81,7 +79,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "País" está vacío
         if (!sucursal.selecPais) {
             Swal.fire({
@@ -91,7 +88,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "Provincia" está vacío
         if (!sucursal.selcProvincia) {
             Swal.fire({
@@ -101,7 +97,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "Nombre de la calle" está vacío
         if (!sucursal.nombreCalle) {
             Swal.fire({
@@ -111,7 +106,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "Localidad" está vacío
         if (!sucursal.selecLocalidad) {
             Swal.fire({
@@ -121,7 +115,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "Latitud" está vacío
         if (!sucursal.latitud) {
             Swal.fire({
@@ -131,7 +124,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "Número de la calle" está vacío
         if (!sucursal.numeroCalle) {
             Swal.fire({
@@ -141,7 +133,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "Código postal" está vacío
         if (!sucursal.codigoPostal) {
             Swal.fire({
@@ -151,7 +142,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "Número de piso" está vacío
         if (!sucursal.numeroPiso) {
             Swal.fire({
@@ -161,7 +151,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "Número de departamento" está vacío
         if (!sucursal.numeroDepartamento) {
             Swal.fire({
@@ -171,7 +160,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             });
             return; // Detener la ejecución si el campo está vacío
         }
-
         // Validar si el campo "URL de la imagen" está vacío
         if (!sucursal.urlImagen) {
             Swal.fire({
@@ -182,7 +170,7 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({ initialValues, onSubmit, 
             return; // Detener la ejecución si el campo está vacío
         }
 
-        // Si todos los campos están completos, llamar al prop onSubmit con la sucursal actualizada
+        //Si todos los campos están completos, llamar al prop onSubmit con la sucursal actualizada
         onSubmit(sucursal);
     };
 

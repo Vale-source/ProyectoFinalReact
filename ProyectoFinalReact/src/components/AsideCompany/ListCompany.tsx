@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
 import { RootState } from "../../store/store";
-import { IPropsEmpresas } from "./AsideCompany";
 import { AsideCompanyViewDataModal } from "../modals/AsideCompanyViewDataModal";
 import { AsideCompanyEditModal } from "../modals/AsideCompanyEditModal";
 import Swal from "sweetalert2";
-import { deleteCompany } from "../../features/asideSlice/asideSlice";
+import {
+	deleteCompany,
+	IPropsEmpresas,
+} from "../../features/asideSlice/asideSlice";
+import { editNavbar } from "../../features/conectCompanyBranchSlice/conectCompanyBranchSlice";
 
 export const ListCompany = () => {
+
 	const companyState = useAppSelector(
 		(state: RootState) => state.asideSlice.value
 	);
@@ -37,6 +41,10 @@ export const ListCompany = () => {
 		setSelectedCompanyEdit(null);
 	};
 
+	const handleRenderNavBar = (company: IPropsEmpresas) => {
+		dispatch(editNavbar(company))
+	}
+
 	const handleDeletCompany = (company: IPropsEmpresas) => {
 		Swal.fire({
 			icon: "warning",
@@ -61,7 +69,6 @@ export const ListCompany = () => {
 					color: "white",
 					customClass: {
 						confirmButton: "btn btn-success",
-						
 					},
 				});
 			}
@@ -87,7 +94,9 @@ export const ListCompany = () => {
 							className="card-title"
 							style={{
 								textShadow: "2px black",
-							}}>
+							}}
+							onClick={() => handleRenderNavBar(company)}
+							>
 							{company.name}
 						</h5>
 						<p

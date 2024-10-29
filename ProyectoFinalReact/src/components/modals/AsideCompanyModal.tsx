@@ -1,4 +1,5 @@
-import { IPropsEmpresas } from "../AsideCompany/AsideCompany";
+import { IPropsEmpresas } from "../../features/asideSlice/asideSlice";
+import {  } from "../AsideCompany/AsideCompany";
 interface IPropsModalCompany {
 	closeModal: (e: boolean) => void;
 	handleChanges: (e: React.ChangeEvent<HTMLInputElement>) => void;

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface Sucursal {
+export interface Sucursal {
     id: number;
     nombreSucursal: string;
     selecPais: string;
@@ -70,7 +70,8 @@ const sucursalesSlice = createSlice({
                 state.push(nuevaSucursal);
                 console.log("Nueva sucursal agregada:", nuevaSucursal);
             }
-        }
+        },
+
     }
 })
 

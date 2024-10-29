@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import ModalVerSucursal from './ModalVerSucursal/ModalVerSucursal';
 import CrearSucursal from '../../navBar/CrearSucursal/CrearSucursal';
-import { useDispatch } from 'react-redux';
-import { actualizarSucursal } from '../../sucursalesSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hook';
+import { setBranch } from '../../../features/asideSlice/asideSlice';
+import { RootState } from '../../../store/store';
+import { editBranchForCompany } from '../../../features/conectCompanyBranchSlice/conectCompanyBranchSlice';
+
 
 // Define la interfaz de tipo Sucursal para las propiedades que contendrá
 interface Sucursal {
@@ -30,9 +33,14 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
     const [showPopupVerSucursal, setShowPopupVerSucursal] = useState(false);
     const [showPopupEditarSucursal, setShowPopupEditarSucursal] = useState(false);
     
+    const navBarState = useAppSelector(
+		(state: RootState) => state.conectCompanyBranchSlice
+	);
+
+
     // Hook para despachar acciones de Redux
-    const dispatch = useDispatch();
-    
+    const dispatch = useAppDispatch()
+
     // Función para alternar el estado del popup de edición
     const cambiarEstadoEditarSucursal = () => {
         setShowPopupEditarSucursal(!showPopupEditarSucursal);
@@ -46,10 +54,13 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
     // Función que maneja la actualización de la sucursal
     const handleSubmit = (sucursalActualizada: Sucursal) => {
         // Combina la sucursal actualizada con su ID original
-        const sucursalConId = { ...sucursalActualizada, id: sucursal.id };
+        const sucursalConId = { ...sucursalActualizada};
+        dispatch(editBranchForCompany(sucursalConId))
+        dispatch(setBranch({ companyId: navBarState.id, branch: sucursalConId }))
+
         // Despacha la acción para actualizar la sucursal en el estado global
-        dispatch(actualizarSucursal(sucursalConId));
         console.log("Sucursal actualizada: ", sucursalConId);
+
         // Cierra el popup de edición
         setShowPopupEditarSucursal(false);
     };

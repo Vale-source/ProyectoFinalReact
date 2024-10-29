@@ -1,6 +1,5 @@
 import NavBar from "./components/navBar/NavBar";
 import CuerpoPrincipal from "./components/CuerpoPrincipal/CuerpoPrincipal";
-import AsideEmpresa from "./components/AsideEmpresa";
 import { AppRouter } from "./routes/AppRouter";
 import AsideCompany from "./components/AsideCompany/AsideCompany";
 
