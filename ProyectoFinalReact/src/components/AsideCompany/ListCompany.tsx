@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hook";
 import { RootState } from "../../store/store";
-import { AsideCompanyViewDataModal } from "../modals/AsideCompanyViewDataModal";
-import { AsideCompanyEditModal } from "../modals/AsideCompanyEditModal";
+import { AsideCompanyViewDataModal } from "./modals/AsideCompanyViewDataModal";
+import { AsideCompanyEditModal } from "./modals/AsideCompanyEditModal";
 import Swal from "sweetalert2";
 import {
 	deleteCompany,
