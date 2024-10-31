@@ -1,11 +1,21 @@
 import { useState } from "react";
 import FatherModal from "../CategoriesModal/Father/FatherModal";
 
-const buttonsOfCategoriesTable = () => {
+
+const ButtonsOfCategoriesTable = ({ menuContent }: { menuContent: string }) => {
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
+
   return (
     <>
       {/* items de ACCIONES */}
-      <button style={{ backgroundColor: "#212529", color: "white" }}>
+      <button
+        onClick={toggleMenu}
+        style={{ backgroundColor: "#212529", color: "white" }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -20,6 +30,9 @@ const buttonsOfCategoriesTable = () => {
           />
         </svg>
       </button>
+
+     
+
       <button style={{ backgroundColor: "#212529", color: "white" }}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,6 +59,7 @@ const buttonsOfCategoriesTable = () => {
           <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z" />
         </svg>
       </button>
+      {menuVisible && <div>{menuContent}</div>}
     </>
   );
 };
@@ -81,29 +95,35 @@ export const Categories = () => {
 
         {isModalOpen && <FatherModal onClose={handleCloseModal} />}
       </div>
-      <div className="categoriesTable"
-        style={{ display: "flex", justifyContent: "right", padding: "10px", fontSize: "x-large" }}
+      <div
+        className="categoriesTable"
+        style={{
+          display: "flex",
+          justifyContent: "right",
+          padding: "10px",
+          fontSize: "x-large",
+        }}
       >
         <table className="table table-dark table-hover">
         <tbody>
-          <tr>
-            <td>Menú</td>
-            <td>{buttonsOfCategoriesTable()}</td>
-          </tr>
-          <tr>
-            <td>Cafetería</td>
-            <td>{buttonsOfCategoriesTable()}</td>
-          </tr>
-          <tr>
-            <td>Cocktails</td>
-            <td>{buttonsOfCategoriesTable()}</td>
-          </tr>
-          <tr>
-            <td>Vino por copa</td>
-            <td>{buttonsOfCategoriesTable()}</td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td>Menú</td>
+              <td><ButtonsOfCategoriesTable menuContent="Contenido del Menú" /></td>
+            </tr>
+            <tr>
+              <td>Cafetería</td>
+              <td><ButtonsOfCategoriesTable menuContent="Contenido de la Cafetería" /></td>
+            </tr>
+            <tr>
+              <td>Cocktails</td>
+              <td><ButtonsOfCategoriesTable menuContent="Contenido de Cocktails" /></td>
+            </tr>
+            <tr>
+              <td>Vino por copa</td>
+              <td><ButtonsOfCategoriesTable menuContent="Contenido de Vino por copa" /></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );
