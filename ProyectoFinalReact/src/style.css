@@ -238,3 +238,20 @@
     border: 2px solid black; /* Borde de la carta */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra de la carta */
 }
+
+/* Estilos para tablas de producto, alergeno y categoria*/
+.table.table-dark.table-hover th,
+.table.table-dark.table-hover td {
+  text-align: center; /* Centra el contenido horizontalmente */
+  vertical-align: middle; /* Centra el contenido verticalmente */
+}
+
+/* Estilos input de products */
+.inputsDivProductsModal input{
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+}
