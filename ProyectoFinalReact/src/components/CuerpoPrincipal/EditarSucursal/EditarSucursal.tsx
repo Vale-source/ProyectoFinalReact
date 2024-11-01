@@ -1,26 +1,36 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { ICreateSucursal } from "../../../types/dtos/sucursal/ICreateSucursal";
+import { ISucursal } from "../../../types/dtos/sucursal/ISucursal";
 import { BranchServices } from "../../../services/branchServices";
 
 // Definir las propiedades para el componente CrearSucursal
 interface CrearSucursalProps {
-	initialValues: ICreateSucursal; // Valores iniciales para los campos del formulario
+	initialValues: ISucursal; // Valores iniciales para los campos del formulario
 	onClose: () => void; // Callback para manejar el cierre del formulario
 }
 
 // Definición del componente CrearSucursal
-const CrearSucursal: React.FC<CrearSucursalProps> = ({
+const EditarSucursal: React.FC<CrearSucursalProps> = ({
 	initialValues,
 	onClose,
 }) => {
 	// Estado para mantener los valores actuales del formulario
-	const [sucursal, setSucursal] = useState<ICreateSucursal>(initialValues);
+	const [sucursal, setSucursal] = useState<ISucursal>(initialValues);
 	const [isCreated, setIsCreated] = useState(false);
+  const idCompany = 1;
+	const URL = "http://190.221.207.224:8090"; // Ensure this is correctly set in your environment variables
+	const branchServices = new BranchServices(URL + "/sucursales");
 
-	const URL = "http://190.221.207.224:8090" // Ensure this is correctly set in your environment variables
+	const getAllSucursal = async (id: number) => {
+		const branch: ISucursal = await branchServices.getAllBranchsByCompanyId(
+			id
+		);
+		setSucursal(branch);
+	};
 
-    const branchServices = new BranchServices(URL + "/sucursales")
+	useEffect(() => {
+		getAllSucursal(idCompany);
+	}, []);
 
 	useEffect(() => {
 		if (isCreated) {
@@ -59,7 +69,11 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 		// Verificamos que el string ingresado sea una imagen, que comience con https
 		const imageVerify = () => {
 			const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
-			return sucursal.logo !== null && urlRegex.test(sucursal.logo);
+			return (
+				sucursal.logo !== null &&
+				sucursal.logo !== undefined &&
+				urlRegex.test(sucursal.logo)
+			);
 		};
 
 		// Verificamos que todos los campos estén llenos
@@ -90,35 +104,35 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 			return;
 		}
 
-        if (!streetNameVerify()) {
-            Swal.fire({
+		if (!streetNameVerify()) {
+			Swal.fire({
 				icon: "error",
 				title: "Ingrese un URL valido",
 				background: "black",
 				color: "white",
 			});
 			return;
-        }
+		}
 
-        if (!imageVerify()) {
-            Swal.fire({
+		if (!imageVerify()) {
+			Swal.fire({
 				icon: "error",
 				title: "Ingrese un URL valido",
 				background: "black",
 				color: "white",
 			});
 			return;
-        }
+		}
 
-        if (!nameVerify()) {
-            Swal.fire({
+		if (!nameVerify()) {
+			Swal.fire({
 				icon: "error",
 				title: "Ingrese un URL valido",
 				background: "black",
 				color: "white",
 			});
 			return;
-        }
+		}
 
 		try {
 			await branchServices.post(sucursal);
@@ -277,4 +291,4 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 	);
 };
 
-export default CrearSucursal;
+export default EditarSucursal;

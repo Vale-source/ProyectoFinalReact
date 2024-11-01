@@ -1,53 +1,57 @@
+import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
 import Swal from "sweetalert2";
-import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/hook";
-import { addCompany, IPropsEmpresas } from "../../features/asideSlice/asideSlice";
-import { ListCompany } from "./ListCompany";
+import React, { useState, useEffect } from "react";
 import { AsideCompanyModal } from "./modals/AsideCompanyModal";
-import { RootState } from "../../store/store";
-import { v4 as uuidv4 } from "uuid";
+import { ListCompany } from "./ListCompany";
+import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
+import { CompanyServices } from "../../services/companyServices";
 
 const AsideCompany = () => {
 	const [showModal, setShowModal] = useState(false);
-
-	const dispatch = useAppDispatch();
-
-	const companyState = useAppSelector(
-		(state: RootState) => state.asideSlice.value
-	);
-
-	let intialState = {
-		id: "",
-		name: "",
-		socialReason: "",
+	const [activeCompany, setActiveCompany] = useState<ICreateEmpresaDto>({
+		nombre: "",
+		razonSocial: "",
 		cuit: 0,
-		image: "",
-		sucursales: []
-	};
-	
-	const [activeCompany, setActiveCompany] =
-		useState<IPropsEmpresas>(intialState);
+		logo: "",
+	});
 
-	const handleChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const [company, setCompany] = useState<IEmpresa[]>([])
+
+	const URL = "http://190.221.207.224:8090" // Ensure this is correctly set in your environment variables
+
+	const companyServices = new CompanyServices(URL + "/empresas");
+
+	const handleChanges = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
+
+		const newValue = name === "cuit" && value !== "" ? Number(value) : value;
+
 		setActiveCompany((prevState) => ({
 			...prevState,
-			[name]: name === "cuit" ? Number(value) : value,
+			[name]: newValue,
 		}));
+
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const refreshCompanyList = async () => {
+		const company: IEmpresa[] = await companyServices.getAllCompany();
+		setCompany(company);
+	};
 
-		activeCompany.id = uuidv4();
+	useEffect(() => {
+		refreshCompanyList();
+	}, []);
+
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 
 		// Verifico que todos los campos esten llenos
 		const allFieldsFilled = () => {
 			return (
-				activeCompany.name.trim() !== "" &&
-				activeCompany.socialReason.trim() !== "" &&
+				activeCompany.nombre.trim() !== "" &&
+				activeCompany.razonSocial.trim() !== "" &&
 				activeCompany.cuit !== 0 &&
-				activeCompany.image.trim() !== ""
+				activeCompany.logo?.trim() !== ""
 			);
 		};
 
@@ -64,34 +68,29 @@ const AsideCompany = () => {
 
 		// Verificamos que el nombre solo contenga letras
 		const nameVerify = () => {
-			const nameRegex = /^[A-Za-z\s]+$/;
-			return !nameRegex.test(activeCompany.name);
+			const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
+			return nameRegex.test(activeCompany.nombre);
 		};
 
 		// Verificamos que la razon social solo contenga letras
 		const socialReasonVerify = () => {
 			const socialReasonRegex = /^[A-Za-z\s]+$/;
-			return !socialReasonRegex.test(activeCompany.socialReason);
+			return socialReasonRegex.test(activeCompany.razonSocial);
 		};
 
 		// Verificamos que el string ingresado sea una imagen, que comience con https
 		const imageVerify = () => {
 			const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
-			return !urlRegex.test(activeCompany.image);
+			return activeCompany.logo !== null && urlRegex.test(activeCompany.logo);
 		};
 
 		// Verifico el CUIT
 		const cuitVerify = () => {
 			const cuitAsString = activeCompany.cuit.toString();
-			return (
-				activeCompany.cuit === null ||
-				activeCompany.cuit === undefined ||
-				activeCompany.cuit <= 0 ||
-				cuitAsString.length !== 11
-			);
+			return cuitAsString.length === 11 && activeCompany.cuit > 0;
 		};
 
-		if (nameVerify()) {
+		if (!nameVerify()) {
 			Swal.fire({
 				icon: "error",
 				title: "Oops...",
@@ -102,7 +101,7 @@ const AsideCompany = () => {
 			return;
 		}
 
-		if (socialReasonVerify()) {
+		if (!socialReasonVerify()) {
 			Swal.fire({
 				icon: "error",
 				title: "Oops...",
@@ -113,7 +112,7 @@ const AsideCompany = () => {
 			return;
 		}
 
-		if (cuitVerify()) {
+		if (!cuitVerify()) {
 			Swal.fire({
 				icon: "error",
 				title: "Oops...",
@@ -124,7 +123,7 @@ const AsideCompany = () => {
 			return;
 		}
 
-		if (imageVerify()) {
+		if (!imageVerify()) {
 			Swal.fire({
 				icon: "error",
 				title: "Oops...",
@@ -135,53 +134,55 @@ const AsideCompany = () => {
 			return;
 		}
 
-		// Verifico que el CUIT no se repita
-		const isDuplicate = companyState.some(
-			(c) => c.cuit === activeCompany.cuit
-		);
+		try {
+			await companyServices.createCompany(activeCompany);
 
-		if (isDuplicate) {
+			Swal.fire({
+				icon: "success",
+				title: "Empresa guardada",
+				showConfirmButton: true,
+				confirmButtonText: "Aceptar",
+				customClass: {
+					confirmButton: "btn btn-success",
+				},
+				background: "black",
+				color: "white",
+				});
+				
+			setActiveCompany({
+				nombre: "",
+				razonSocial: "",
+				cuit: 0,
+				logo: "",
+			});
+
+			setShowModal(false);
+			await refreshCompanyList();
+		} catch (error) {
 			Swal.fire({
 				icon: "error",
-				title: "Oops...",
-				text: "No puedes repetir el mismo CUIT",
+				title: "Error",
+				text: (error as any).message,
+				showConfirmButton: true,
+				confirmButtonText: "Aceptar",
+				customClass: {
+					confirmButton: "btn btn-danger",
+				},
 				background: "black",
 				color: "white",
 			});
-			return;
 		}
-
-		Swal.fire({
-			icon: "success",
-			title: "Empresa guardada",
-			showConfirmButton: true,
-			confirmButtonText: "Aceptar",
-			customClass: {
-				confirmButton: "btn btn-success"
-			},
-			background: "black",
-			color: "white",
-		})
-		dispatch(addCompany(activeCompany));
-		setShowModal(false);
-
-		let initialState = {
-			id: "",
-			name: "",
-			socialReason: "",
-			cuit: 0,
-			image: "",
-			sucursales: []
-		};
-		setActiveCompany(initialState);
 	};
+
 
 	return (
 		<div
 			className="asideGeneral"
 			style={{
 				alignItems: "center",
-			}}>
+				overflowY: "auto",
+				width: "300px",
+				}}>
 			<h1 className="">Empresas</h1>
 			<button
 				type="button"
@@ -190,19 +191,18 @@ const AsideCompany = () => {
 				style={{
 					borderRadius: "30px",
 					border: "2px solid black",
-					transition: "all 0.3s ease"	
+					transition: "all 0.3s ease",
 				}}>
 				Agregar empresa
 			</button>
 			{showModal && (
 				<AsideCompanyModal
-					inicialState={intialState}
 					closeModal={setShowModal}
 					handleChanges={handleChanges}
 					handleAddCompany={handleSubmit}
 				/>
 			)}
-			<ListCompany />
+			<ListCompany company={company} refreshCompanyList={refreshCompanyList} />
 		</div>
 	);
 };

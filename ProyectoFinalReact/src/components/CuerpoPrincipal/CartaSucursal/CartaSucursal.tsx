@@ -1,45 +1,37 @@
 import React, { useState } from 'react';
 import ModalVerSucursal from './ModalVerSucursal/ModalVerSucursal';
-import CrearSucursal from '../../navBar/CrearSucursal/CrearSucursal';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hook';
-import { setBranch } from '../../../features/asideSlice/asideSlice';
-import { RootState } from '../../../store/store';
-import { editBranchForCompany } from '../../../features/conectCompanyBranchSlice/conectCompanyBranchSlice';
 
+import { RootState } from '../../../store/store';
+import {ISucursal} from "../../../types/dtos/sucursal/ISucursal"
 
 // Define la interfaz de tipo Sucursal para las propiedades que contendrá
-interface Sucursal {
-    id: number;
-    nombreSucursal: string;
-    selecPais: string;
-    selecLocalidad: string;
-    longitud: number;
-    timeAper: string;
-    selcProvincia: string;
-    latitud: number;
-    codigoPostal: number;
-    timeCierre: string;
-    nombreCalle: string;
-    numeroCalle: number;
-    numeroPiso: number;
-    numeroDepartamento: number;
-    urlImagen: string;
-    habilitado: boolean;
-}
+// interface Sucursal {
+//     id: number;
+//     nombreSucursal: string;
+//     selecPais: string;
+//     selecLocalidad: string;
+//     longitud: number;
+//     timeAper: string;
+//     selcProvincia: string;
+//     latitud: number;
+//     codigoPostal: number;
+//     timeCierre: string;
+//     nombreCalle: string;
+//     numeroCalle: number;
+//     numeroPiso: number;
+//     numeroDepartamento: number;
+//     urlImagen: string;
+//     habilitado: boolean;
+// }
 
 // Componente funcional CartaSucursal que recibe una sucursal como prop
-const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
+const CartaSucursal: React.FC<{ sucursal: ISucursal }> = ({ sucursal }) => {
+
     // Estados para mostrar los popups de ver y editar sucursal
     const [showPopupVerSucursal, setShowPopupVerSucursal] = useState(false);
     const [showPopupEditarSucursal, setShowPopupEditarSucursal] = useState(false);
-    
-    const navBarState = useAppSelector(
-		(state: RootState) => state.conectCompanyBranchSlice
-	);
 
-
-    // Hook para despachar acciones de Redux
-    const dispatch = useAppDispatch()
 
     // Función para alternar el estado del popup de edición
     const cambiarEstadoEditarSucursal = () => {
@@ -52,11 +44,11 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
     };
 
     // Función que maneja la actualización de la sucursal
-    const handleSubmit = (sucursalActualizada: Sucursal) => {
+    const handleSubmit = (sucursalActualizada: ISucursal) => {
         // Combina la sucursal actualizada con su ID original
         const sucursalConId = { ...sucursalActualizada};
-        dispatch(editBranchForCompany(sucursalConId))
-        dispatch(setBranch({ companyId: navBarState.id, branch: sucursalConId }))
+        // dispatch(editBranchForCompany(sucursalConId))
+        // dispatch(setBranch({ companyId: navBarState.id, branch: sucursalConId }))
 
         // Despacha la acción para actualizar la sucursal en el estado global
         console.log("Sucursal actualizada: ", sucursalConId);
@@ -79,14 +71,14 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
             border: "1px solid white",
         }}>
             {/* Imagen de la sucursal */}
-            <img src={sucursal.urlImagen} className="card-img-top" alt="..." style={{
+            {/* <img src={sucursal.logo} className="card-img-top" alt="..." style={{
                 width: "170px",
-            }} />
+            }} /> */}
             <div className="card-body">
                 {/* Títulos y texto de la sucursal */}
-                <h5 className="card-title">{sucursal.nombreSucursal}</h5>
-                <p className="card-text">Horario Apertura: {sucursal.timeAper}</p>
-                <p className="card-text">Horario Cierre: {sucursal.timeCierre}</p>
+                <h5 className="card-title">{sucursal.nombre}</h5>
+                <p className="card-text">Horario Apertura: {sucursal.horarioApertura}</p>
+                <p className="card-text">Horario Cierre: {sucursal.horarioCierre}</p>
                 
                 {/* Botones para interactuar con la sucursal */}
                 <div style={{
@@ -190,7 +182,7 @@ const CartaSucursal: React.FC<{ sucursal: Sucursal }> = ({ sucursal }) => {
             {/* Mostrar el popup de editar sucursal si está activo */}
             {showPopupEditarSucursal && (
                 <div className="popup-overlay">
-                    <CrearSucursal initialValues={{ ...sucursal, id: sucursal.id }} onClose={cambiarEstadoEditarSucursal} onSubmit={handleSubmit} />
+                    {/* <CrearSucursal initialValues={{ ...sucursal, id: sucursal.id }} onClose={cambiarEstadoEditarSucursal} onSubmit={handleSubmit} /> */}
                 </div>
             )}
         </div>

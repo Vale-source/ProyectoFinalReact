@@ -9,7 +9,7 @@ export const store = configureStore({
 	reducer: {
 		asideSlice: asideSlice.reducer,
 		sucursales: sucursalesReducer,
-		conectCompanyBranchSlice: conectCompanyBranchSlice.reducer
+		conectCompanyBranchSlice: conectCompanyBranchSlice
 	}	
 });
 

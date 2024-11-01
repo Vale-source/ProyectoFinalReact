@@ -1,9 +1,7 @@
-import { IPropsEmpresas } from "../../../features/asideSlice/asideSlice";
 interface IPropsModalCompany {
 	closeModal: (e: boolean) => void;
 	handleChanges: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleAddCompany: (e: React.FormEvent<HTMLFormElement>) => void;
-	inicialState: IPropsEmpresas;
 }
 
 export const AsideCompanyModal: React.FC<IPropsModalCompany> = ({
@@ -46,7 +44,7 @@ export const AsideCompanyModal: React.FC<IPropsModalCompany> = ({
 									<input
 										className="form-control"
 										type="text"
-										name="name"
+										name="nombre"
 										placeholder="Ingrese un nombre"
 										aria-label="default input example"
 										onChange={handleChanges}
@@ -56,7 +54,7 @@ export const AsideCompanyModal: React.FC<IPropsModalCompany> = ({
 									<input
 										className="form-control"
 										type="text"
-										name="socialReason"
+										name="razonSocial"
 										placeholder="Ingrese una razon social"
 										aria-label="default input example"
 										onChange={handleChanges}
@@ -65,7 +63,7 @@ export const AsideCompanyModal: React.FC<IPropsModalCompany> = ({
 								<div className="mb-3">
 									<input
 										className="form-control"
-										type="text"
+										type="number"
 										name="cuit"
 										placeholder="Ingrese un CUIT"
 										aria-label="default input example"
@@ -75,8 +73,8 @@ export const AsideCompanyModal: React.FC<IPropsModalCompany> = ({
 								<div className="mb-3">
 									<input
 										className="form-control"
-										type="url"
-										name="image"
+										type="text"
+										name="logo"
 										placeholder="Ingrese la URL de la imagen"
 										aria-label="default input example"
 										onChange={handleChanges}

@@ -1,9 +1,10 @@
 import { FC } from "react";
 import {  } from "../AsideCompany";
-import { IPropsEmpresas } from "../../../features/asideSlice/asideSlice";
+import { } from "../../../features/asideSlice/asideSlice";
+import { ICreateEmpresaDto } from "../../../types/dtos/empresa/ICreateEmpresaDto";
 
 interface IPropsAsideViewData {
-	company: IPropsEmpresas | null;
+	company: ICreateEmpresaDto | null;
 	onClose: () => void;
 }
 
@@ -33,7 +34,7 @@ export const AsideCompanyViewDataModal: FC<IPropsAsideViewData> = ({
 								className="modal-title fs-5"
 								id="staticBackdropLabel"
 								style={{ color: "white" }}>
-								<h2>{company.name}</h2>
+								<h2>{company.nombre}</h2>
 							</h2>
 						</div>
 						<div
@@ -43,12 +44,12 @@ export const AsideCompanyViewDataModal: FC<IPropsAsideViewData> = ({
 								padding: "0.4rem",
 								justifyContent: "space-between",
 							}}>
-							<p>Razón Social: {company.socialReason}</p>
+							<p>Razón Social: {company.razonSocial}</p>
 							<p>CUIT: {company.cuit}</p>
 							<img
-								src={company.image}
+								src={company.logo || ""}
 								className="rounded mx-auto d-block"
-								alt={company.name}
+								alt={company.nombre}
 								style={{
 									height: "50%",
 									width: "50%",
