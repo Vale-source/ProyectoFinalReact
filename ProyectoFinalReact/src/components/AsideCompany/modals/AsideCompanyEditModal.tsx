@@ -23,14 +23,14 @@ export const AsideCompanyEditModal: FC<IPropsEditData> = ({
         eliminado: false
     });
 
-    const URL = "http://190.221.207.224:8090"; // Ensure this is correctly set in your environment variables
+    const URL = "http://190.221.207.224:8090";
     const companyServices = new CompanyServices(URL + "/empresas");
 
     const handleEditData = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
         if (name === "cuit") {
-            const numericValue = value.replace(/\D/g, ""); // Remueve caracteres no numéricos
+            const numericValue = value.replace(/\D/g, ""); // Remuevo caracteres no numericos
 
             setNewData({
                 ...newData,

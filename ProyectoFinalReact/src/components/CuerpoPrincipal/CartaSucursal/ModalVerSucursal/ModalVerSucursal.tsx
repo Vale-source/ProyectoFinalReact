@@ -1,9 +1,9 @@
 import React from 'react';
-import {ISucursal} from "../../../../types/dtos/sucursal/ISucursal"
+import { IUpdateSucursal } from '../../../../types/dtos/sucursal/IUpdateSucursal';
 // Definición de las propiedades del componente ModalVerSucursal
 interface ModalVerSucursalProps {
     onClose: () => void; // Función para cerrar el modal
-    sucursal: ISucursal; // Objeto sucursal que contiene los detalles de la sucursal
+    sucursal: IUpdateSucursal; // Objeto sucursal que contiene los detalles de la sucursal
 }
 
 // Definición de la interfaz Sucursal
@@ -23,9 +23,17 @@ const ModalVerSucursal: React.FC<ModalVerSucursalProps> = ({ onClose, sucursal }
                 <h4>Horario Cierre: {sucursal.horarioCierre}</h4>
             </div>
             <div className="image-button-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-                {/* <img src={sucursal.urlImagen} alt="Imagen de la sucursal" style={{
-                    width: "170px", // Ancho de la imagen
-                }} /> */}
+            <img 
+                    src={sucursal.logo ?? ''} 
+                    alt="" 
+                    style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'cover',
+                        borderRadius: '50%',
+                        marginBottom: '10px'
+                    }} 
+                />
                 <button type="button" className="btn btn-danger" onClick={onClose}>Cerrar</button> {/* Botón para cerrar el modal */}
             </div>
         </div>

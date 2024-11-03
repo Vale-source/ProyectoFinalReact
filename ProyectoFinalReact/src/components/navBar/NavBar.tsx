@@ -6,6 +6,11 @@ import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
 // Interfaz que define la estructura de una sucursal
 
 const NavBar = () => {
+	// Obtener el estado de la empresa activa desde el store
+	const navBarState = useAppSelector(
+		(state: RootState) => state.conectCompanyBranchSlice
+	);
+
 	// Valores iniciales para el formulario de sucursal
 	const initialValues: ICreateSucursal = {
 		nombre: "",
@@ -22,26 +27,22 @@ const NavBar = () => {
 			nroDpto: 0,
 			idLocalidad: 0,
 		},
-		idEmpresa: 0,
+		idEmpresa: navBarState.activeCompany?.id ?? 0,
 		logo: null,
 	};
 
 	// Estado para controlar la visibilidad del popup
 	const [showPopup, setShowPopup] = useState(false);
 
-	// Obtener el estado de la empresa activa desde el store
-	const navBarState = useAppSelector(
-		(state: RootState) => state.conectCompanyBranchSlice
-	);
-
 	// Función para cambiar el estado de visibilidad del popup
 	const cambiarEstado = () => {
 		setShowPopup(!showPopup);
+		console.log(initialValues)
 	};
 
 	return (
 		<div className="NavBarGeneral">
-			<h1>Sucursales en: {} </h1>{" "}
+			<h1>Sucursales en: {navBarState.activeCompany?.nombre} </h1>{" "}
 			{/* Título de la barra de navegación */}
 			<button
 				type="button"

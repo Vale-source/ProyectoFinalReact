@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { AsideCompanyViewDataModal } from "./modals/AsideCompanyViewDataModal";
 import { AsideCompanyEditModal } from "./modals/AsideCompanyEditModal";
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
+import { useDispatch } from "react-redux";
+import { setActiveCompany } from "../../features/conectCompanyBranchSlice/conectCompanyBranchSlice";
 
 
 export const ListCompany = ({ company, refreshCompanyList }: { company: IEmpresa[], refreshCompanyList: () => Promise<void> }) => {
 
 	const [selectedCompany, setSelectedCompany] = useState<IEmpresa | null>(null);
 	const [selectedCompanyEdit, setSelectedCompanyEdit] = useState<IEmpresa | null>(null);
-
+	const dispatch = useDispatch();
 	useEffect(() => {
 		refreshCompanyList();
 	}, [refreshCompanyList]);
@@ -29,6 +31,9 @@ export const ListCompany = ({ company, refreshCompanyList }: { company: IEmpresa
 		setSelectedCompanyEdit(null);
 		await refreshCompanyList(); 
 	};
+	const handleCurrentCompany = (company: IEmpresa)=>{
+		dispatch(setActiveCompany(company));
+	}
 
 	return (
 		<div>
@@ -45,8 +50,8 @@ export const ListCompany = ({ company, refreshCompanyList }: { company: IEmpresa
 							justifyContent: "center",
 							margin: "0.5rem",
 						}}>
-						<div className="card-body" style={{ textAlign: "center" }}>
-							<h5 className="card-title" style={{ textShadow: "2px black" }}>
+						<div className="card-body" id="cardBodyCompany" style={{ textAlign: "center" }}>
+							<h5 className="card-title" style={{ textShadow: "2px black" }} onClick={() => handleCurrentCompany(company)}>
 								{company.nombre}
 							</h5>
 							<p className="card-text" style={{ display: "flex", justifyContent: "center", gap: "10px" }}>

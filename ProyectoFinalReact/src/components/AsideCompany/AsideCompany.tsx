@@ -17,7 +17,7 @@ const AsideCompany = () => {
 
 	const [company, setCompany] = useState<IEmpresa[]>([])
 
-	const URL = "http://190.221.207.224:8090" // Ensure this is correctly set in your environment variables
+	const URL = "http://190.221.207.224:8090"
 
 	const companyServices = new CompanyServices(URL + "/empresas");
 

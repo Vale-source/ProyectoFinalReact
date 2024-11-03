@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import ModalVerSucursal from './ModalVerSucursal/ModalVerSucursal';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hook';
-
+import EditarSucursal from "../EditarSucursal/EditarSucursal"
 import { RootState } from '../../../store/store';
 import {ISucursal} from "../../../types/dtos/sucursal/ISucursal"
+import { IUpdateSucursal } from '../../../types/dtos/sucursal/IUpdateSucursal';
 
 // Define la interfaz de tipo Sucursal para las propiedades que contendrá
 // interface Sucursal {
@@ -26,7 +27,7 @@ import {ISucursal} from "../../../types/dtos/sucursal/ISucursal"
 // }
 
 // Componente funcional CartaSucursal que recibe una sucursal como prop
-const CartaSucursal: React.FC<{ sucursal: ISucursal }> = ({ sucursal }) => {
+const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal }> = ({ sucursal }) => {
 
     // Estados para mostrar los popups de ver y editar sucursal
     const [showPopupVerSucursal, setShowPopupVerSucursal] = useState(false);
@@ -79,7 +80,17 @@ const CartaSucursal: React.FC<{ sucursal: ISucursal }> = ({ sucursal }) => {
                 <h5 className="card-title">{sucursal.nombre}</h5>
                 <p className="card-text">Horario Apertura: {sucursal.horarioApertura}</p>
                 <p className="card-text">Horario Cierre: {sucursal.horarioCierre}</p>
-                
+                <img 
+                    src={sucursal.logo ?? ''} 
+                    alt="" 
+                    style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'cover',
+                        borderRadius: '50%',
+                        marginBottom: '10px'
+                    }} 
+                />
                 {/* Botones para interactuar con la sucursal */}
                 <div style={{
                     display: 'flex',
@@ -182,7 +193,10 @@ const CartaSucursal: React.FC<{ sucursal: ISucursal }> = ({ sucursal }) => {
             {/* Mostrar el popup de editar sucursal si está activo */}
             {showPopupEditarSucursal && (
                 <div className="popup-overlay">
-                    {/* <CrearSucursal initialValues={{ ...sucursal, id: sucursal.id }} onClose={cambiarEstadoEditarSucursal} onSubmit={handleSubmit} /> */}
+                    <EditarSucursal
+                        initialValues={sucursal}
+                        onClose={cambiarEstadoEditarSucursal}
+                    />
                 </div>
             )}
         </div>
