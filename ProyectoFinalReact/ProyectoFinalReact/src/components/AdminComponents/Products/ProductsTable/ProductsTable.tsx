@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { IProductos } from "../../../types/dtos/productos/IProductos";
+
 import ProductsModal from "../ProductsModal/ProductsModal";
-import { ProductServices } from "../../../services/productServices";
-import { ICategorias } from "../../../types/dtos/categorias/ICategorias";
-import { CategoriesServices } from "../../../services/categoriesServices";
+import { ProductServices } from "../../../../services/productServices";
+import { CategoriesServices } from "../../../../services/categoriesServices";
+import { IProductos } from "../../../../types/dtos/productos/IProductos";
+import { ICategorias } from "../../../../types/dtos/categorias/ICategorias";
 
 export const Products: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [products, setProducts] = useState<IProductos[]>([]); // Estado para los productos
+  const [products, setProducts] = useState<IProductos[]>([]); 
   const [categorias, setCategorias] = useState<ICategorias[]>([]);
   const [selectedCategoria, setSelectedCategoria] = useState<string>("");
   const producsServices = new ProductServices(
@@ -27,15 +28,15 @@ export const Products: React.FC = () => {
 
   const fetchProducts = async () => {
     try {
-      const data = await producsServices.getAllProductsForBranch(1);
-      setProducts(data); // Asume que `data` es un array de productos
+      const data = await producsServices.getAllProductsForBranch(1); //reemplazar con id de la sucursal seleccionada
+      setProducts(data); 
     } catch (error) {
       console.error("Error al obtener productos:", error);
     }
   };
 
   const fetchCategorias = async () => {
-    const data = await categoriesServices.getAllCategoriesForBranch(1); // Cambia la URL según tu endpoint
+    const data = await categoriesServices.getAllCategoriesForBranch(1); //reemplazar con id de la sucursal seleccionada
     setCategorias(data);
   };
 
@@ -55,19 +56,15 @@ export const Products: React.FC = () => {
     : products;
   const handleView = (id: number) => {
     // Lógica para ver el producto
-    console.log(`Ver producto con ID: ${id}`);
-    handleOpenModal(); // Puedes abrir el modal para mostrar detalles
   };
 
   const handleEdit = (id: number) => {
     // Lógica para editar el producto
-    console.log(`Editar producto con ID: ${id}`);
-    handleOpenModal(); // Abre el modal para editar
   };
 
   const handleDelete = (id: number) => {
     // Lógica para eliminar el producto
-    console.log(`Eliminar producto con ID: ${id}`);
+ 
   };
 
   const buttonsOfProductsTable = (id: number) => (
@@ -225,7 +222,12 @@ export const Products: React.FC = () => {
               />
             </svg>
           </button>
-          {isModalOpen && <ProductsModal onClose={handleCloseModal} />}
+          {isModalOpen && (
+            <ProductsModal
+              onClose={handleCloseModal}
+              fetchProducts={fetchProducts}
+            />
+          )}
         </div>
       </div>
 
@@ -258,7 +260,7 @@ export const Products: React.FC = () => {
             ))}
           </tbody>
         </table>
-        {isModalOpen && <ProductsModal onClose={handleCloseModal} />}
+
       </div>
     </div>
   );

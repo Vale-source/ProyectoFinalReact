@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
-import { AllergensServices } from "../../../services/allergensServices";
 import AllergensModal from "../AllergensModal/CreateAllergenModal";
-import { ImagesServices } from "../../../services/imagesService";
-import { ICreateAlergeno } from "../../../types/dtos/alergenos/ICreateAlergeno";
 import ViewAllergenModal from "../AllergensModal/ViewAllergenModal";
-import { IUpdateAlergeno } from "../../../types/dtos/alergenos/IUpdateAlergeno";
 import UpdateAllergenModal from "../AllergensModal/UpdateAllergenModal";
 import Swal from "sweetalert2";
+import { IAlergenos } from "../../../../types/dtos/alergenos/IAlergenos";
+import { AllergensServices } from "../../../../services/allergensServices";
+import { ImagesServices } from "../../../../services/imagesService";
+import { ICreateAlergeno } from "../../../../types/dtos/alergenos/ICreateAlergeno";
+import { IUpdateAlergeno } from "../../../../types/dtos/alergenos/IUpdateAlergeno";
 
 function Allergens() {
   const [allergens, setAllergens] = useState<IAlergenos[]>([]);

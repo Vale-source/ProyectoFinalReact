@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import Swal from "sweetalert2";
-import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
+import { IAlergenos } from "../../../../types/dtos/alergenos/IAlergenos";
+
 
 interface UpdateAllergenModalProps {
   allergen: IAlergenos | null;

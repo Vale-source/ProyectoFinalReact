@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { setComponenteActual } from '../../store/slices/componentSlice';
+import { setComponenteActual } from '../../../store/slices/componentSlice';
+
 
 
 const AsideAdmin: React.FC = () => {

@@ -1,9 +1,11 @@
 
 import { AppRouter } from "./routes/AppRouter";
 
-import NavBarAdmin from "./components/NavBar/NavBarAdmin";
-import BodyAdmin from "./components/MainBody/BodyAdmin";
-import AsideAdmin from "./components/Aside/AsideAdmin";
+
+import BodyAdmin from "./components/AdminComponents/MainBody/BodyAdmin";
+import NavBarAdmin from "./components/AdminComponents/NavBar/NavBarAdmin";
+import AsideAdmin from "./components/AdminComponents/Aside/AsideAdmin";
+
 
 function App() {
 	return (

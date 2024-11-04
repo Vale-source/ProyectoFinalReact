@@ -1,6 +1,6 @@
 
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { RootState } from '../../../store/store';
 import { Categories } from '../Categories/CategoriesTable/CategoriesTable';
 import { Products } from '../Products/ProductsTable/ProductsTable';
 import Allergens from '../Allergens/AllergensTable/AllergensTable';
