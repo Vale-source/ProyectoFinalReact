@@ -5,12 +5,11 @@ import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
 import { useDispatch } from "react-redux";
 import { setActiveCompany } from "../../features/conectCompanyBranchSlice/conectCompanyBranchSlice";
 
-
 export const ListCompany = ({ company, refreshCompanyList }: { company: IEmpresa[], refreshCompanyList: () => Promise<void> }) => {
-
 	const [selectedCompany, setSelectedCompany] = useState<IEmpresa | null>(null);
 	const [selectedCompanyEdit, setSelectedCompanyEdit] = useState<IEmpresa | null>(null);
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		refreshCompanyList();
 	}, [refreshCompanyList]);
@@ -29,11 +28,12 @@ export const ListCompany = ({ company, refreshCompanyList }: { company: IEmpresa
 
 	const handleCloseEditModal = async () => {
 		setSelectedCompanyEdit(null);
-		await refreshCompanyList(); 
+		await refreshCompanyList();
 	};
-	const handleCurrentCompany = (company: IEmpresa)=>{
+
+	const handleCurrentCompany = (company: IEmpresa) => {
 		dispatch(setActiveCompany(company));
-	}
+	};
 
 	return (
 		<div>
