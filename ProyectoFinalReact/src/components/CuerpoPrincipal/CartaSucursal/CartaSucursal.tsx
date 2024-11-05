@@ -5,6 +5,7 @@ import EditarSucursal from "../EditarSucursal/EditarSucursal"
 import { RootState } from '../../../store/store';
 import {ISucursal} from "../../../types/dtos/sucursal/ISucursal"
 import { IUpdateSucursal } from '../../../types/dtos/sucursal/IUpdateSucursal';
+import { setActiveBranch } from '../../../features/conectCompanyBranchSlice/conectCompanyBranchSlice';
 
 // Define la interfaz de tipo Sucursal para las propiedades que contendrá
 // interface Sucursal {
@@ -27,7 +28,7 @@ import { IUpdateSucursal } from '../../../types/dtos/sucursal/IUpdateSucursal';
 // }
 
 // Componente funcional CartaSucursal que recibe una sucursal como prop
-const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal }> = ({ sucursal }) => {
+const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal , sucursalConId:ISucursal }> = ({ sucursal, sucursalConId }) => {
 
     // Estados para mostrar los popups de ver y editar sucursal
     const [showPopupVerSucursal, setShowPopupVerSucursal] = useState(false);
@@ -43,6 +44,13 @@ const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal }> = ({ sucursal }) =>
     const cambiarEstadoVerSucursal = () => {
         setShowPopupVerSucursal(!showPopupVerSucursal);
     };
+
+    const dispatch = useAppDispatch();
+
+    const setearSucursalActualCambiarAdmin = () =>{
+        dispatch(setActiveBranch(sucursalConId));
+        window.location.href = '/admin';
+    }
 
     // Función que maneja la actualización de la sucursal
     const handleSubmit = (sucursalActualizada: ISucursal) => {
@@ -113,6 +121,7 @@ const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal }> = ({ sucursal }) =>
                         }}
                         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)')}
                         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                        onClick={setearSucursalActualCambiarAdmin}
                     >
                         <span
                             style={{

@@ -35,7 +35,7 @@ const CuerpoPrincipal = () => {
             <div className="content" style={{ maxHeight: "830px", overflowY: "auto", display: "flex", flexWrap: "wrap" }}>
                 {sucursales.map((data, index) => (
 					<div key={`${index}-${index}`}>
-                        <CartaSucursal sucursal={data as unknown as IUpdateSucursal} />
+                        <CartaSucursal sucursal={data as unknown as IUpdateSucursal} sucursalConId = {data}/>
 					</div>
                 ))}
             </div>
