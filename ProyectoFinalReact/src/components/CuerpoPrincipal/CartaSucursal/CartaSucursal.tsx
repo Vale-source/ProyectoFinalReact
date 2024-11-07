@@ -6,6 +6,7 @@ import { RootState } from '../../../store/store';
 import {ISucursal} from "../../../types/dtos/sucursal/ISucursal"
 import { IUpdateSucursal } from '../../../types/dtos/sucursal/IUpdateSucursal';
 import { setActiveBranch } from '../../../features/conectCompanyBranchSlice/conectCompanyBranchSlice';
+import { useNavigate } from 'react-router-dom';
 
 // Define la interfaz de tipo Sucursal para las propiedades que contendrá
 // interface Sucursal {
@@ -45,11 +46,14 @@ const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal , sucursalConId:ISucur
         setShowPopupVerSucursal(!showPopupVerSucursal);
     };
 
+    const navigate = useNavigate();
+
     const dispatch = useAppDispatch();
+
 
     const setearSucursalActualCambiarAdmin = () =>{
         dispatch(setActiveBranch(sucursalConId));
-        window.location.href = '/admin';
+        navigate("/admin");
     }
 
     // Función que maneja la actualización de la sucursal
@@ -121,7 +125,7 @@ const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal , sucursalConId:ISucur
                         }}
                         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)')}
                         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
-                        onClick={setearSucursalActualCambiarAdmin}
+                        onClick={setearSucursalActualCambiarAdmin }
                     >
                         <span
                             style={{

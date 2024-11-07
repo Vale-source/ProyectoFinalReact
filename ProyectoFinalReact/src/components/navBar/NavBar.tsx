@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAppSelector } from "../../hooks/hook";
 import { RootState } from "../../store/store";
 import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
+import React from "react";
 // Interfaz que define la estructura de una sucursal
 
 const NavBar = () => {

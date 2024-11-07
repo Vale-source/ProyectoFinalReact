@@ -1,5 +1,7 @@
 import { FC } from "react";
-import { IAlergenos } from "../../../types/dtos/alergenos/IAlergenos";
+
+import React from "react";
+import { IAlergenos } from "../../../../types/dtos/alergenos/IAlergenos";
 
 interface ViewAllergenModalProps {
   allergen: IAlergenos | null;

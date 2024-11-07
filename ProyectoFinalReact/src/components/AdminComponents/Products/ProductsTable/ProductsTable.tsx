@@ -5,6 +5,8 @@ import { ProductServices } from "../../../../services/productServices";
 import { CategoriesServices } from "../../../../services/categoriesServices";
 import { IProductos } from "../../../../types/dtos/productos/IProductos";
 import { ICategorias } from "../../../../types/dtos/categorias/ICategorias";
+import { useAppSelector } from "../../../../hooks/hook";
+import { RootState } from "../../../../store/store";
 
 export const Products: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
@@ -18,6 +20,8 @@ export const Products: React.FC = () => {
     "http://190.221.207.224:8090/categorias"
   );
 
+  const sucursalActiva = useAppSelector((state: RootState) => state.conectCompanyBranchSlice.activeBranch);
+
   const handleOpenModal = () => {
     setModalOpen(true);
   };
@@ -28,7 +32,7 @@ export const Products: React.FC = () => {
 
   const fetchProducts = async () => {
     try {
-      const data = await producsServices.getAllProductsForBranch(1); //reemplazar con id de la sucursal seleccionada
+      const data = await producsServices.getAllProductsForBranch(sucursalActiva? sucursalActiva.id : 0); //reemplazar con id de la sucursal seleccionada
       setProducts(data); 
     } catch (error) {
       console.error("Error al obtener productos:", error);
@@ -36,7 +40,7 @@ export const Products: React.FC = () => {
   };
 
   const fetchCategorias = async () => {
-    const data = await categoriesServices.getAllCategoriesForBranch(1); //reemplazar con id de la sucursal seleccionada
+    const data = await categoriesServices.getAllCategoriesForBranch(sucursalActiva? sucursalActiva.id : 0); //reemplazar con id de la sucursal seleccionada
     setCategorias(data);
   };
 

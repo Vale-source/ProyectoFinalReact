@@ -8,6 +8,10 @@ import { AllergensServices } from "../../../../services/allergensServices";
 import { ImagesServices } from "../../../../services/imagesService";
 import { ICreateAlergeno } from "../../../../types/dtos/alergenos/ICreateAlergeno";
 import { IUpdateAlergeno } from "../../../../types/dtos/alergenos/IUpdateAlergeno";
+import React from "react";
+import { ProductServices } from "../../../../services/productServices";
+import { useAppSelector } from "../../../../hooks/hook";
+import { RootState } from "../../../../store/store";
 
 function Allergens() {
   const [allergens, setAllergens] = useState<IAlergenos[]>([]);
@@ -20,6 +24,10 @@ function Allergens() {
 
   const allergensServices = new AllergensServices(
     "http://190.221.207.224:8090/alergenos"
+  );
+
+  const producsServices = new ProductServices(
+    "http://190.221.207.224:8090/articulos"
   );
 
   async function createAllergenWithImage(file: File, name: string) {
@@ -91,13 +99,13 @@ function Allergens() {
   const handleOpenModal = () => setIsModalOpen(true);
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); 
+    setIsModalOpen(false);
   };
 
   const handleCreateAllergen = async (file: File, name: string) => {
     try {
       await createAllergenWithImage(file, name);
-      await fetchAllergens(); 
+      await fetchAllergens();
     } catch (error) {
       console.error("Error al crear alérgeno:", error);
     }

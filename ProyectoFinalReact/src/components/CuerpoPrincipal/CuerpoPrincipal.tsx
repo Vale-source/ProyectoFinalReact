@@ -6,6 +6,7 @@ import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import { BranchServices } from "../../services/branchServices";
 import { setSucursales } from "../../features/conectCompanyBranchSlice/conectCompanyBranchSlice";
 import { IUpdateSucursal } from "../../types/dtos/sucursal/IUpdateSucursal";
+import React from "react";
 
 // Componente funcional CuerpoPrincipal
 const CuerpoPrincipal = () => {

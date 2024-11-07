@@ -8,6 +8,8 @@ import { AllergensServices } from "../../../../services/allergensServices";
 import { ProductServices } from "../../../../services/productServices";
 import { ImagesServices } from "../../../../services/imagesService";
 import Swal from "sweetalert2";
+import { useAppSelector } from "../../../../hooks/hook";
+import { RootState } from "../../../../store/store";
 interface ProductsModalProps {
   onClose: () => void;
   fetchProducts: () => void;
@@ -28,14 +30,14 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
   const [categorias, setCategorias] = useState<ICategorias[]>([]);
   const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
   const [habilitado, setHabilitado] = useState<boolean>(false);
-
+  const sucursalActiva = useAppSelector((state: RootState) => state.conectCompanyBranchSlice.activeBranch);
   useEffect(() => {
     const fetchCategorias = async () => {
       const categoriesServices = new CategoriesServices(
         "http://190.221.207.224:8090/categorias"
       );
       const data: ICategorias[] =
-        await categoriesServices.getAllCategoriesForBranch(1); //reemplazar con id de la sucursal seleccionada
+        await categoriesServices.getAllCategoriesForBranch(sucursalActiva?sucursalActiva.id : 0); //reemplazar con id de la sucursal seleccionada
       setCategorias(data);
     };
 

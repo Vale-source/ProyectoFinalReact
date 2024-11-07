@@ -149,18 +149,9 @@
     font-size: 19px; /* Tamaño de la fuente */
 }
 
-/* Estilos para los botones dentro de la barra de navegación de Admin*/
-.NavBarAdmin button {
-    border-radius: 30px; /* Bordes redondeados */
-    height: 50px; /* Altura del botón */
-    width: 100px; /* Ancho del botón */
-    border: 1px solid rgb(255, 255, 255); /* Borde del botón */
-    margin-top: 10px; /* Margen superior */
-    margin-bottom: 10px; /* Margen inferior */
-    margin-left:30px ;
-    background-color: black; /* Color de fondo */
+/* Estilos para los encabezados dentro de la barra de navegación de administracion */
+.NavBarAdmin h1 {
     color: white; /* Color del texto */
-    font-size: 19px; /* Tamaño de la fuente */
 }
 
 /* Estilos para el cuerpo principal */

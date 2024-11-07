@@ -3,7 +3,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { Categories } from '../Categories/CategoriesTable/CategoriesTable';
 import { Products } from '../Products/ProductsTable/ProductsTable';
+
+import React from 'react';
 import Allergens from '../Allergens/AllergensTable/AllergensTable';
+
+
+
 
 
 
