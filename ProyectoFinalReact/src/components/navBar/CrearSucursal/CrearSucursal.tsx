@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setActiveCompany, addSucursal } from "../../../features/conectCompanyBranchSlice/conectCompanyBranchSlice";
 import { useAppSelector } from "../../../hooks/hook";
 import { RootState } from "../../../store/store";
+import { ImagesServices } from "../../../services/imagesService";
 
 
 // Definir las propiedades para el componente CrearSucursal
@@ -24,8 +25,9 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 	const URL = "http://190.221.207.224:8090/sucursales" // Ensure this is correctly set in your environment variables
 
 	const branchServices = new BranchServices(URL)
-
+	const imageService = new ImagesServices(URL + "/images");
 	const dispatch = useDispatch();
+	const [file, setFile] = useState<File | null>(null);
 
 	// Manejar el cambio en los campos de entrada
 	const handleChange = (
@@ -58,6 +60,11 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 			}
 		});
 	};
+	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files[0]) {
+			setFile(e.target.files[0]); 
+		}
+	};
 
 
 	// Manejar el envío del formulario
@@ -66,7 +73,7 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 		e.preventDefault(); // Prevenir el comportamiento predeterminado del envío del formulario
 		// Validar si el campo "Nombre de la sucursal" está vacío
 		console.log(sucursal)
-		const urlPattern =  /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+		const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
 
 		if (!sucursal.nombre.trim()) {
 			Swal.fire({
@@ -158,16 +165,12 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 			return; // Detener la ejecución si el campo está vacío
 		}
 
-		if (!sucursal.logo) {
-			Swal.fire({
-				icon: "error",
-				title: "Todos los campos tienen que estar completos",
-				text: "Falta completar el campo \"URL de la imagen\" o el formato es incorrecto",
-			});
-			return; // Detener la ejecución si el campo está vacío o el formato es incorrecto
-		}
 		console.log(sucursal)
 		try {
+			if (file) {
+				const image = await imageService.uploadImage(file);
+				sucursal.logo = image.url;
+			}
 			const nuevaSucursal = await branchServices.createBranch(sucursal);
 			dispatch(addSucursal(nuevaSucursal));
 			onClose();
@@ -273,21 +276,38 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 						onChange={handleChange}
 						className="div12"
 					/>
-					<input
-						type="number"
-						name="idLocalidad"
-						onChange={handleChange}
-						placeholder="Ingrese el ID de la localidad"
-						className="div13"
-					/>
+					<select name="select1" onChange={handleChange} className="div13">
+						<option value="">Seleccione un Pais</option>
+						<option value="opcion1">Opción 1</option>
+						<option value="opcion2">Opción 2</option>
+						<option value="opcion3">Opción 3</option>
+					</select>
+					{/* Campo para Provincias */}
+					<select name="select2" onChange={handleChange} className="div14">
+						<option value="">Seleccione una Provincia</option>
+						<option value="opcion1">Opción 1</option>
+						<option value="opcion2">Opción 2</option>
+						<option value="opcion3">Opción 3</option>
+					</select>
+					{/* Campo para Localidad*/}
+					<select name="select3" onChange={handleChange} className="div15">
+						<option value="">Seleccione una Localidad</option>
+						<option value="opcion1">Opción 1</option>
+						<option value="opcion2">Opción 2</option>
+						<option value="opcion3">Opción 3</option>
+					</select>
 					{/* Campo para la URL de la imagen */}
-					<input
-						type="text"
-						name="logo"
-						placeholder="URL de la imagen"
-						onChange={handleChange}
-						className="div14"
-					/>
+					<div className="mb-3 div16">
+						<input
+							className="form-control"
+							type="file"
+							accept="image/*"
+							onChange={handleFileChange}
+							style={{paddingLeft:"20px"}}
+						/>
+					</div>
+					{/* Campo para Pais */}
+
 					<div className="divBotones">
 						{/* Botón para confirmar la creación de la sucursal */}
 						<button
