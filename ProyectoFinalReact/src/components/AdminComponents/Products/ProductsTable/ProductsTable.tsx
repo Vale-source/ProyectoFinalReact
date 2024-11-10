@@ -32,7 +32,7 @@ export const Products: React.FC = () => {
 
   const fetchProducts = async () => {
     try {
-      const data = await producsServices.getAllProductsForBranch(sucursalActiva? sucursalActiva.id : 0); //reemplazar con id de la sucursal seleccionada
+      const data = await producsServices.getAllProductsForBranch(sucursalActiva? sucursalActiva.id : 0); 
       setProducts(data); 
     } catch (error) {
       console.error("Error al obtener productos:", error);
@@ -40,7 +40,7 @@ export const Products: React.FC = () => {
   };
 
   const fetchCategorias = async () => {
-    const data = await categoriesServices.getAllCategoriesForBranch(sucursalActiva? sucursalActiva.id : 0); //reemplazar con id de la sucursal seleccionada
+    const data = await categoriesServices.getAllCategoriesForBranch(sucursalActiva? sucursalActiva.id : 0); 
     setCategorias(data);
   };
 
