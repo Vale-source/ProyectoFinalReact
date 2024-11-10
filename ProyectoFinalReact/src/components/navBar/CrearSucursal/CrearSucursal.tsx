@@ -22,9 +22,9 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 }) => {
 	// Estado para mantener los valores actuales del formulario
 	const [sucursal, setSucursal] = useState<ICreateSucursal>(initialValues);
-	const URL = "http://190.221.207.224:8090/sucursales" // Ensure this is correctly set in your environment variables
+	const URL = "http://190.221.207.224:8090" // Ensure this is correctly set in your environment variables
 
-	const branchServices = new BranchServices(URL)
+	const branchServices = new BranchServices(URL + "/sucursales")
 	const imageService = new ImagesServices(URL + "/images");
 	const dispatch = useDispatch();
 	const [file, setFile] = useState<File | null>(null);
@@ -164,14 +164,26 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 			});
 			return; // Detener la ejecución si el campo está vacío
 		}
+		if (!file) {
+			Swal.fire({
+				icon: "error",
+				title: "Todos los campos tienen que estar completos",
+				text: "Falta completar el campo \"Logo de la sucursal\"",
+			});
+			return; // Detener la ejecución si el campo está vacío
+		}
 
 		console.log(sucursal)
 		try {
+			let updatedSucursal = { ...sucursal };
 			if (file) {
 				const image = await imageService.uploadImage(file);
-				sucursal.logo = image.url;
+				updatedSucursal = {
+					...updatedSucursal,
+					logo: image.url,
+				};
 			}
-			const nuevaSucursal = await branchServices.createBranch(sucursal);
+			const nuevaSucursal = await branchServices.createBranch(updatedSucursal);
 			dispatch(addSucursal(nuevaSucursal));
 			onClose();
 		} catch (error) {
@@ -290,11 +302,16 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 						<option value="opcion3">Opción 3</option>
 					</select>
 					{/* Campo para Localidad*/}
-					<select name="select3" onChange={handleChange} className="div15">
+					<select
+						name="idLocalidad"
+						onChange={handleChange}
+						className="div15"
+						value={sucursal.domicilio.idLocalidad}
+					>
 						<option value="">Seleccione una Localidad</option>
-						<option value="opcion1">Opción 1</option>
-						<option value="opcion2">Opción 2</option>
-						<option value="opcion3">Opción 3</option>
+						<option value={1}>Opción 1</option>
+						<option value={2}>Opción 2</option>
+						<option value={3}>Opción 3</option>
 					</select>
 					{/* Campo para la URL de la imagen */}
 					<div className="mb-3 div16">

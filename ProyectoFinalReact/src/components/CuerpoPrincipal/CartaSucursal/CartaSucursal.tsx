@@ -101,7 +101,7 @@ const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal , sucursalConId:ISucur
                         objectFit: 'cover',
                         borderRadius: '50%',
                         marginBottom: '10px'
-                    }} 
+                    }}
                 />
                 {/* Botones para interactuar con la sucursal */}
                 <div style={{

@@ -29,7 +29,7 @@ const NavBar = () => {
 			idLocalidad: 0,
 		},
 		idEmpresa: navBarState.activeCompany?.id ?? 0,
-		logo: null,
+		logo: "",
 	};
 
 	// Estado para controlar la visibilidad del popup

@@ -6,6 +6,7 @@ import { updateSucursal } from "../../../features/conectCompanyBranchSlice/conec
 import { IUpdateSucursal } from "../../../types/dtos/sucursal/IUpdateSucursal";
 import { ISucursal } from "../../../types/dtos/sucursal/ISucursal";
 import { RootState } from "../../../store/store";
+import { ImagesServices } from "../../../services/imagesService";
 
 // Definir las propiedades para el componente CrearSucursal
 interface EditarSucursalProps {
@@ -20,12 +21,20 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
 }) => {
 	// Estado para mantener los valores actuales del formulario
 	const [sucursal, setSucursal] = useState<IUpdateSucursal>(initialValues);
-	const URL = "http://190.221.207.224:8090/sucursales" // Ensure this is correctly set in your environment variables
+	const URL = "http://190.221.207.224:8090" // Ensure this is correctly set in your environment variables
 
-	const branchServices = new BranchServices(URL)
+	const branchServices = new BranchServices(URL+"/sucursales")
+	const imageService = new ImagesServices(URL + "/images");
+	const [file, setFile] = useState<File | null>(null);
 
 	const dispatch = useDispatch();
 	const activeCompany = useSelector((state: RootState) => state.conectCompanyBranchSlice.activeCompany);
+	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files[0]) {
+			setFile(e.target.files[0]); 
+		}
+	};
+
 
 	// Manejar el cambio en los campos de entrada
 	const handleChange = (
@@ -170,23 +179,23 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
 			});
 			return; // Detener la ejecución si el campo está vacío
 		}
-
-		// Validar si el campo "URL de la imagen" está vacío o no cumple con el patrón
-        if (!imageVerify()) {
-            Swal.fire({
+		if (!file && !imageVerify()) {
+			Swal.fire({
 				icon: "error",
-				title: "Ingrese un URL valido",
-				background: "black",
-				color: "white",
+				title: "Todos los campos tienen que estar completos",
+				text: "Falta completar el campo \"Logo de la sucursal\"",
 			});
-			return; // Detener la ejecución si el campo está vacío o no cumple con el patrón
+			return; // Detener la ejecución si el campo está vacío
 		}
 
 		// Verificar que idEmpresa esté presente
 		console.log(sucursal.idEmpresa)
 		if (!sucursal.idEmpresa) {
 			if (activeCompany) {
-				sucursal.idEmpresa = activeCompany.id;
+				setSucursal((prevState) => ({
+					...prevState,
+					idEmpresa: activeCompany.id,
+				}));
 			} else {
 				Swal.fire({
 					icon: "error",
@@ -198,8 +207,16 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
 		}
 
 		try {
+			let updatedSucursal = { ...sucursal };
+			if (file) {
+				const image = await imageService.uploadImage(file);
+				updatedSucursal = {
+					...updatedSucursal,
+					logo: image.url,
+				};
+			}
 			console.log(sucursal.idEmpresa)
-			await branchServices.put(initialValues.id, sucursal);
+			await branchServices.put(initialValues.id, updatedSucursal);
 			const sucursalActualizada = await branchServices.getById(initialValues.id)
 			if (sucursalActualizada) {
 				dispatch(updateSucursal(sucursalActualizada as ISucursal));
@@ -211,6 +228,7 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
 				});
 			}
 			onClose();
+			console.log(sucursalActualizada)
 		} catch (error) {
 			Swal.fire({
 				icon: "error",
@@ -323,23 +341,41 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
 						onChange={handleChange}
 						className="div12"
 					/>
-					<input
-						type="number"
+					<select name="select1" onChange={handleChange} className="div13">
+						<option value="">Seleccione un Pais</option>
+						<option value="opcion1">Opción 1</option>
+						<option value="opcion2">Opción 2</option>
+						<option value="opcion3">Opción 3</option>
+					</select>
+					{/* Campo para Provincias */}
+					<select name="select2" onChange={handleChange} className="div14">
+						<option value="">Seleccione una Provincia</option>
+						<option value="opcion1">Opción 1</option>
+						<option value="opcion2">Opción 2</option>
+						<option value="opcion3">Opción 3</option>
+					</select>
+					{/* Campo para Localidad*/}
+					<select
 						name="idLocalidad"
-						placeholder="Ingrese el ID de la localidad"
-						value={sucursal.domicilio.id}
 						onChange={handleChange}
-						className="div13"
-					/>
+						className="div15"
+						value={sucursal.domicilio.idLocalidad}
+					>
+						<option value="">Seleccione una Localidad</option>
+						<option value={1}>Opción 1</option>
+						<option value={2}>Opción 2</option>
+						<option value={3}>Opción 3</option>
+					</select>
 					{/* Campo para la URL de la imagen */}
-					<input
-						type="text"
-						name="logo"
-						placeholder="URL de la imagen"
-						value={sucursal.logo || ''}
-						onChange={handleChange}
-						className="div14"
-					/>
+					<div className="mb-3 div16">
+						<input
+							className="form-control"
+							type="file"
+							accept="image/*"
+							onChange={handleFileChange}
+							style={{paddingLeft:"20px"}}
+						/>
+					</div>
 					<div className="divBotones">
 						{/* Botón para confirmar la creación de la sucursal */}
 						<button
