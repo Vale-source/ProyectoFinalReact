@@ -20,7 +20,6 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
   categorias,
   onClose,
   fetchProducts,
-  
 }) => {
   const [values, setValues] = useState<IUpdateProducto>({
     id: product.id,
@@ -34,9 +33,10 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
     idCategoria: product.categoria.id,
     idAlergenos: product.alergenos.map((alergeno) => alergeno.id),
   });
-  
+
   const [imagenesToUpload, setImagenesToUpload] = useState<File[]>([]); // Para múltiples imágenes
   const [alergeno, setAlergeno] = useState<IAlergenos[] | null>(null);
+  const [habilitado, setHabilitado] = useState<boolean>(product.habilitado);
   const [categoriaSelected, setCategoriaSelected] = useState<number>(
     product.categoria.id
   );
@@ -55,12 +55,16 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
   const imageService = new ImagesServices("http://190.221.207.224:8090/images");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (name === "precioVenta") {
-      setValues({ ...values, [name]: parseFloat(value) });
-    } else {
-      setValues({ ...values, [name]: value });
-    }
+    const { name, type, checked, value } = e.target;
+    setValues({
+      ...values,
+      [name]:
+        type === "checkbox"
+          ? checked
+          : name === "precioVenta"
+          ? parseFloat(value)
+          : value,
+    });
   };
 
   // Para manejar los cambios de los alérgenos seleccionados
@@ -96,20 +100,28 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
     setCategoriaSelected(parseInt(e.target.value));
   };
 
+
   const handleSave = async () => {
     setLoading(true);
     setError(null);
-    if (!values.denominacion || !values.precioVenta || !values.descripcion || !values.codigo || !categoriaSelected || !parseAlergenos.length) {
-        Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Ningun campo puede quedar vacio!.",
-            background: "#313131",
-            color: "white",
-          });
-        setLoading(false);
-        return;
-      }
+    if (
+      !values.denominacion ||
+      !values.precioVenta ||
+      !values.descripcion ||
+      !values.codigo ||
+      !categoriaSelected ||
+      !parseAlergenos.length
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ningun campo puede quedar vacio!.",
+        background: "#313131",
+        color: "white",
+      });
+      setLoading(false);
+      return;
+    }
     try {
       // Subir todas las imágenes seleccionadas
       const uploadedImages = await Promise.all(
@@ -178,7 +190,7 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
         style={{
           backgroundColor: "black",
           color: "white",
-          width: "700px",
+          width: "850px",
           padding: "20px",
           borderRadius: "5px",
           display: "flex",
@@ -266,6 +278,20 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
                 <p>No hay alérgenos disponibles</p>
               )}
             </div>
+            {/* Imagenes */}
+
+            <input
+              type="file"
+              onChange={handleImageChange}
+              multiple
+              style={{
+                padding: "10px",
+                borderRadius: "5px",
+                backgroundColor: "black",
+                border: "1px solid white",
+                color: "white",
+              }}
+            />
           </div>
 
           {/* Segunda columna de inputs */}
@@ -318,23 +344,31 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
                 color: "white",
               }}
             />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+                borderRadius: "5px",
+                border: "1px solid white",
+                padding: "10px",
+                height: "40px",
+              }}>
+              <label style={{ display: "flex", alignItems: "center", gap: "290px" }}>
+                Habilitado
+                <input
+                  type="checkbox"
+                  checked={habilitado}
+                  
+                  onChange={(e) => {
+                    setHabilitado((prev) => !prev);
+                    handleInputChange(e);
+                  }}
+                  style={{ marginRight: "10px" }}
+                />
+              </label>
+            </div>
           </div>
-        </div>
-
-        {/* Imagenes */}
-        <div>
-          <input
-            type="file"
-            onChange={handleImageChange}
-            multiple
-            style={{
-              padding: "10px",
-              borderRadius: "5px",
-              backgroundColor: "black",
-              border: "1px solid white",
-              color: "white",
-            }}
-          />
         </div>
 
         {/* Mensajes de error */}

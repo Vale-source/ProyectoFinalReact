@@ -18,7 +18,7 @@ export const Products: React.FC = () => {
   const [subCategorias, setSubCategorias] = useState<ICategorias[]>([]);
   const [selectedSubCategoria, setSelectedSubCategoria] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [pageSize] = useState<number>(15);
+  const [pageSize] = useState<number>(5);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [selectedProduct, setSelectedProduct] = useState<IProductos | null>(
     null

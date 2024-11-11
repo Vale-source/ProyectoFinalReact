@@ -150,7 +150,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
         style={{
           backgroundColor: "black",
           color: "white",
-          width: "700px",
+          width: "850px",
           padding: "20px",
           borderRadius: "5px",
           display: "flex",
@@ -177,6 +177,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
               onChange={(e) => setDenominacion(e.target.value)}
             />
             <select
+            style={{ backgroundColor: "black", color: "white" }}
               name="categoria"
               onChange={(e) => setCategoriaId(Number(e.target.value))}
               value={categoriaId}>
@@ -251,7 +252,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
                 padding: "10px",
                 height: "40px",
               }}>
-              <label style={{ display: "flex", alignItems: "center" }}>
+              <label style={{ display: "flex", alignItems: "center", gap: "250px" }}>
                 Habilitado
                 <input
                   type="checkbox"
