@@ -66,7 +66,7 @@ const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal , sucursalConId:ISucur
         // dispatch(setBranch({ companyId: navBarState.id, branch: sucursalConId }))
 
         // Despacha la acción para actualizar la sucursal en el estado global
-        console.log("Sucursal actualizada: ", sucursalConId);
+
 
         // Cierra el popup de edición
         setShowPopupEditarSucursal(false);

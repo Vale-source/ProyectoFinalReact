@@ -16,7 +16,7 @@ const ModalVerSucursal: React.FC<ModalVerSucursalProps> = ({ onClose, sucursal }
             <div className='infoModalVerSucursal'>
                 {/* Mostrar la información de la sucursal */}
                 <h4>Nombre: {sucursal.nombre}</h4>
-                <h4>Empresa: {sucursal.nombre}</h4> {/* Mismo nombre que la sucursal; puede que sea un error */}
+                <h4>Empresa: {sucursal.empresa.nombre}</h4> {/* Mismo nombre que la sucursal; puede que sea un error */}
                 <h4>Domicilio: {sucursal.domicilio.calle} {sucursal.domicilio.numero}</h4>
                 <h4>¿Casa Matriz?: {sucursal.esCasaMatriz ? 'Sí' : 'No'}</h4>
                 <h4>Horario Apertura: {sucursal.horarioApertura}</h4>

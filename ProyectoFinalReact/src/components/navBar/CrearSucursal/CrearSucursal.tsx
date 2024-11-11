@@ -45,7 +45,7 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
             try {
                 const paises = await paisService.getAll();
                 setPaises(paises);
-				console.log("hola")
+
             } catch (error) {
                 console.error("Error al obtener la lista de países:", error);
             }
@@ -104,7 +104,7 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
 				}));
 				// Assuming you have a state to store the provinces
 				setProvincias(provincias);
-				console.log(provincias)
+
 			} catch (error) {
 				console.error("Error al obtener la lista de provincias:", error);
 			}
@@ -125,7 +125,7 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
                 }));
 				// Assuming you have a state to store the localidades
 				setLocalidades(localidades);
-				console.log(localidades);
+
 			} catch (error) {
 				console.error("Error al obtener la lista de localidades:", error);
 			}
@@ -138,7 +138,7 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // Prevenir el comportamiento predeterminado del envío del formulario
         // Validar si el campo "Nombre de la sucursal" está vacío
-        console.log(sucursal);
+
         const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
 
         if (!sucursal.nombre.trim()) {
@@ -248,7 +248,7 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
             return; // Detener la ejecución si el campo está vacío
         }
 
-        console.log(sucursal);
+
         try {
             let updatedSucursal = { ...sucursal };
             if (file) {
@@ -260,7 +260,6 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
             }
             const nuevaSucursal = await branchServices.createBranch(updatedSucursal);
             dispatch(addSucursal(nuevaSucursal));
-			console.log(nuevaSucursal)
             onClose();
         } catch (error) {
             Swal.fire({
@@ -301,7 +300,7 @@ const CrearSucursal: React.FC<CrearSucursalProps> = ({
                         className="div4"
                     />
                     <div className="div5">
-                        <label>Habilitado</label>
+                        <label>Es casa matriz?</label>
                         {/* Checkbox para habilitar/deshabilitar la sucursal */}
                         <input
                             type="checkbox"

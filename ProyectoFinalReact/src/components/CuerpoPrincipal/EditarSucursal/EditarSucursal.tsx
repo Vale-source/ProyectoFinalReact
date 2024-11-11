@@ -96,6 +96,19 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
         }
     }, [selectedProvince]);
 
+    // Actualiza el estado de sucursal cuando cambia la localidad seleccionada
+    useEffect(() => {
+        if (selectedLocality !== null) {
+            setSucursal((prevState) => ({
+                ...prevState,
+                domicilio: {
+                    ...prevState.domicilio,
+                    idLocalidad: selectedLocality,
+                },
+            }));
+        }
+    }, [selectedLocality]);
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setFile(e.target.files[0]);
@@ -113,15 +126,6 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
     const handleLocalityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newLocality = Number(event.target.value);
         setSelectedLocality(newLocality);
-        setSucursal((prevState) => ({
-            ...prevState,
-            domicilio: {
-                ...prevState.domicilio,
-                idLocalidad: newLocality,
-            },
-        }));
-        console.log("hola"+newLocality);
-        console.log(sucursal);
     };
 
     const handleChange = (
@@ -243,7 +247,12 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
                     logo: image.url,
                 };
             }
-            console.log("Updated Sucursal:", updatedSucursal); // Añadir un log para verificar los datos
+
+            // Actualiza la localidad en updatedSucursal
+            updatedSucursal.domicilio.localidad = localidades.find(localidad => localidad.id === updatedSucursal.domicilio.idLocalidad) || updatedSucursal.domicilio.localidad;
+
+
+
             await branchServices.put(initialValues.id, updatedSucursal);
 
             const sucursalActualizada = await branchServices.getById(initialValues.id);
@@ -312,7 +321,7 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
                         className="div4"
                     />
                     <div className="div5">
-                        <label>Habilitado</label>
+                        <label>Es casa matriz?</label>
                         {/* Checkbox para habilitar/deshabilitar la sucursal */}
                         <input
                             type="checkbox"
@@ -383,8 +392,7 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
                         className="div12"
                     />
                     {/* Select para País */}
-                    <label>País:</label>
-                    <select value={selectedCountry || ''} onChange={handleCountryChange}>
+                    <select value={selectedCountry || ''} onChange={handleCountryChange} className="div13">
                         <option value="">Seleccione un país</option>
                         {paises.map((pais) => (
                             <option key={pais.id} value={pais.id}>
@@ -394,8 +402,7 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
                     </select>
 
                     {/* Select para Provincia */}
-                    <label>Provincia:</label>
-                    <select value={selectedProvince || ''} onChange={handleProvinceChange} disabled={!selectedCountry}>
+                    <select value={selectedProvince || ''} onChange={handleProvinceChange} disabled={!selectedCountry}className="div14">
                         <option value="">Seleccione una provincia</option>
                         {provincias.map((provincia) => (
                             <option key={provincia.id} value={provincia.id}>
@@ -405,8 +412,7 @@ const EditarSucursal: React.FC<EditarSucursalProps> = ({
                     </select>
 
                     {/* Select para Localidad */}
-                    <label>Localidad:</label>
-                    <select value={selectedLocality || ''} onChange={handleLocalityChange} disabled={!selectedProvince}>
+                    <select value={selectedLocality || ''} onChange={handleLocalityChange} disabled={!selectedProvince}className="div15">
                         <option value="">Seleccione una localidad</option>
                         {localidades.map((localidad) => (
                             <option key={localidad.id} value={localidad.id}>
