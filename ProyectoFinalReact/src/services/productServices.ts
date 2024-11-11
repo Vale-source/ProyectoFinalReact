@@ -36,10 +36,12 @@ export class ProductServices extends BackendClient<ICreateProducto | IProductos 
 		return data as IProductos[];
 	}
 
-    async getAllProductsForBranchPaged(id: number): Promise<IProductos[]> {
-		const response = await fetch(`${this.baseUrl}/pagedPorSucursal/${id}`);
+	async getPagedProductsForBranch(idSucursal: number, page: number, size: number) {
+		const response = await fetch(`${this.baseUrl}/pagedPorSucursal/${idSucursal}?page=${page}&size=${size}`);
+		if (!response.ok) {
+		  throw new Error("Error al obtener los productos paginados");
+		}
 		const data = await response.json();
-		return data as IProductos[];
-	}
-
+		return data
+	  }
 }

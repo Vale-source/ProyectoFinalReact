@@ -20,6 +20,7 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
 }) => {
   const [nombre, setNombre] = useState(allergen?.denominacion || "");
   const [imagen, setImagen] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
 
   // Maneja el cambio de imagen
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +32,7 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
   // Maneja la actualización del alérgeno
   const handleUpdate = async () => {
     if (allergen) {
+      setLoading(true); // Inicia el estado de carga
       try {
         await updateAllergenWithImage(imagen, allergen, nombre);
         Swal.fire({
@@ -50,6 +52,8 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
           background: "#313131",
           color: "white",
         });
+      } finally {
+        setLoading(false); // Termina el estado de carga
       }
     }
   };
@@ -67,7 +71,8 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
         justifyContent: "center",
         alignItems: "center",
         backdropFilter: "blur(1px)",
-      }}>
+      }}
+    >
       <div
         style={{
           backgroundColor: "black",
@@ -82,7 +87,8 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
           gap: "0px",
           border: "1px solid white",
           textAlign: "center",
-        }}>
+        }}
+      >
         <h2>Actualizar Alérgeno</h2>
         <input
           style={{
@@ -109,7 +115,8 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
             border: "1px solid white",
             padding: "10px",
             gap: "100px",
-          }}>
+          }}
+        >
           <input
             accept="image/*"
             name="imagen"
@@ -122,7 +129,8 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
             height="70"
             fill="currentColor"
             className="bi bi-camera"
-            viewBox="0 0 16 16">
+            viewBox="0 0 16 16"
+          >
             <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z" />
             <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0" />
           </svg>
@@ -131,24 +139,36 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
           <button
             onClick={onClose}
             style={{
-              backgroundColor: "red",
+              backgroundColor: "#f44336",  // Rojo
               color: "white",
               borderRadius: "10px",
               width: "150px",
               border: "1px solid white",
-            }}>
-            Cancelar
+              padding: "10px",
+              fontSize: "16px",
+              cursor: "pointer",
+              transition: "background-color 0.3s ease",
+            }}
+            disabled={loading}  // Deshabilitar el botón mientras carga
+          >
+            {loading ? "Cargando..." : "Cancelar"}
           </button>
           <button
             onClick={handleUpdate}
             style={{
-              backgroundColor: "green",
+              backgroundColor: "#4CAF50",  // Verde
               color: "white",
               borderRadius: "10px",
               width: "150px",
               border: "1px solid white",
-            }}>
-            Actualizar
+              padding: "10px",
+              fontSize: "16px",
+              cursor: "pointer",
+              transition: "background-color 0.3s ease",
+            }}
+            disabled={loading}  // Deshabilitar el botón mientras carga
+          >
+            {loading ? "Cargando..." : "Confirmar"}
           </button>
         </div>
       </div>

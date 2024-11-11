@@ -24,20 +24,25 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
   const [codigo, setCodigo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [imagenesToUpload, setImagenesToUpload] = useState<File[]>([]); // Cambiar a un array
-  const [imagenes, setImagenes] = useState<IImagen[]>([]); // Cambiar a un array
+  const [imagenes] = useState<IImagen[]>([]); // Cambiar a un array
   const [categoriaId, setCategoriaId] = useState<number | undefined>();
   const [alergenosIds, setAlergenosIds] = useState<number[]>([]);
   const [categorias, setCategorias] = useState<ICategorias[]>([]);
   const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
   const [habilitado, setHabilitado] = useState<boolean>(false);
-  const sucursalActiva = useAppSelector((state: RootState) => state.conectCompanyBranchSlice.activeBranch);
+  const [loading, setIsLoading] = useState<boolean>(false); // Estado de carga
+  const sucursalActiva = useAppSelector(
+    (state: RootState) => state.conectCompanyBranchSlice.activeBranch
+  );
   useEffect(() => {
     const fetchCategorias = async () => {
       const categoriesServices = new CategoriesServices(
         "http://190.221.207.224:8090/categorias"
       );
       const data: ICategorias[] =
-        await categoriesServices.getAllCategoriesForBranch(sucursalActiva?sucursalActiva.id : 0); //reemplazar con id de la sucursal seleccionada
+        await categoriesServices.getAllCategoriesForBranch(
+          sucursalActiva ? sucursalActiva.id : 0
+        ); //reemplazar con id de la sucursal seleccionada
       setCategorias(data);
     };
 
@@ -88,7 +93,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
     );
 
     try {
-      // Subir todas las imágenes seleccionadas
+      setIsLoading(true); // Activar el estado de carga
       const uploadedImages = await Promise.all(
         imagenesToUpload.map(async (img) => {
           const uploadedImage = await imageService.uploadImage(img);
@@ -121,6 +126,8 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
         background: "#313131",
         color: "white",
       });
+    }finally{
+      setIsLoading(false); 
     }
   };
 
@@ -180,26 +187,46 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
                 </option>
               ))}
             </select>
-            <select
+            <div
               style={{
+                display: "grid",
+                gap: "5px",
                 backgroundColor: "black",
+                padding: "10px",
                 border: "1px solid white",
+                borderRadius: "5px",
                 color: "white",
-              }}
-              name="alergenos"
-              multiple
-              onChange={(e) => {
-                const selectedOptions = Array.from(
-                  e.target.selectedOptions
-                ).map((option) => Number(option.value));
-                setAlergenosIds(selectedOptions);
+                maxHeight: "150px",
+                overflowY: "auto",
               }}>
+              <label style={{ marginBottom: "5px" }}>
+                Selecciona alérgenos:
+              </label>
               {alergenos.map((alergeno) => (
-                <option key={alergeno.id} value={alergeno.id}>
+                <div
+                  key={alergeno.id}
+                  onClick={() => {
+                    setAlergenosIds(
+                      (prevIds) =>
+                        prevIds.includes(alergeno.id)
+                          ? prevIds.filter((id) => id !== alergeno.id) // Deseleccionar si ya está seleccionado
+                          : [...prevIds, alergeno.id] // Seleccionar si no está en la lista
+                    );
+                  }}
+                  style={{
+                    padding: "8px",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    backgroundColor: alergenosIds.includes(alergeno.id)
+                      ? "gray"
+                      : "black",
+                    border: "1px solid white",
+                    textAlign: "center",
+                  }}>
                   {alergeno.denominacion}
-                </option>
+                </div>
               ))}
-            </select>
+            </div>
             <input
               type="text"
               name="precioVenta"
@@ -216,6 +243,8 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
             />
             <div
               style={{
+                display: "flex",
+                justifyContent: "center",
                 width: "100%",
                 borderRadius: "5px",
                 border: "1px solid white",
@@ -223,13 +252,13 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
                 height: "40px",
               }}>
               <label style={{ display: "flex", alignItems: "center" }}>
+                Habilitado
                 <input
                   type="checkbox"
                   checked={habilitado}
                   onChange={() => setHabilitado((prev) => !prev)}
                   style={{ marginRight: "10px" }}
                 />
-                Habilitado
               </label>
             </div>
           </div>
@@ -291,28 +320,40 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", justifyContent: "space-around" }}>
           <button
             onClick={onClose}
             style={{
+              backgroundColor: "#f44336",  // Rojo
               color: "white",
-              background: "red",
-              border: "none",
+              borderRadius: "10px",
+              width: "150px",
+              border: "1px solid white",
               padding: "10px",
+              fontSize: "16px",
               cursor: "pointer",
-            }}>
-            Cancelar
+              transition: "background-color 0.3s ease",
+            }}
+            disabled={loading}  // Deshabilitar el botón mientras carga
+          >
+            {loading ? "Cargando..." : "Cancelar"}
           </button>
           <button
             onClick={handleConfirm}
             style={{
+              backgroundColor: "#4CAF50",  // Verde
               color: "white",
-              background: "green",
-              border: "none",
+              borderRadius: "10px",
+              width: "150px",
+              border: "1px solid white",
               padding: "10px",
+              fontSize: "16px",
               cursor: "pointer",
-            }}>
-            Confirmar
+              transition: "background-color 0.3s ease",
+            }}
+            disabled={loading}  // Deshabilitar el botón mientras carga
+          >
+            {loading ? "Cargando..." : "Confirmar"}
           </button>
         </div>
       </div>

@@ -66,11 +66,15 @@ const ViewAllergenModal: FC<ViewAllergenModalProps> = ({
             <button
               onClick={onClose}
               style={{
-                backgroundColor: "red",
+                backgroundColor: "#f44336",  // Rojo
                 color: "white",
                 borderRadius: "10px",
                 width: "150px",
                 border: "1px solid white",
+                padding: "10px",
+                fontSize: "16px",
+                cursor: "pointer",
+                transition: "background-color 0.3s ease",
               }}>
               Cerrar
             </button>
