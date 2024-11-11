@@ -50,7 +50,9 @@ const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal , sucursalConId:ISucur
 
     const dispatch = useAppDispatch();
 
-
+    const setearSucursalActual = () =>{
+        dispatch(setActiveBranch(sucursalConId));
+    }
     const setearSucursalActualCambiarAdmin = () =>{
         dispatch(setActiveBranch(sucursalConId));
         navigate("/admin");
@@ -183,7 +185,7 @@ const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal , sucursalConId:ISucur
                         }}
                         onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)')}
                         onMouseOut={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
-                        onClick={cambiarEstadoEditarSucursal} // Abre el popup para editar la sucursal
+                        onClick={() => { cambiarEstadoEditarSucursal(); setearSucursalActual(); }} // Abre el popup para editar la sucursal
                     >
                         <span
                             style={{
@@ -208,6 +210,7 @@ const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal , sucursalConId:ISucur
                 <div className="popup-overlay">
                     <EditarSucursal
                         initialValues={sucursal}
+                        sucursalActual={sucursalConId}
                         onClose={cambiarEstadoEditarSucursal}
                     />
                 </div>
