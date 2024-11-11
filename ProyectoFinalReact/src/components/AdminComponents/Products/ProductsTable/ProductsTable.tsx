@@ -7,68 +7,166 @@ import { IProductos } from "../../../../types/dtos/productos/IProductos";
 import { ICategorias } from "../../../../types/dtos/categorias/ICategorias";
 import { useAppSelector } from "../../../../hooks/hook";
 import { RootState } from "../../../../store/store";
+import ViewProductModal from "../ProductsModal/ViewProductModal";
+import UpdateProductModal from "../ProductsModal/UpdateProductModal";
+import Swal from "sweetalert2";
 
 export const Products: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [products, setProducts] = useState<IProductos[]>([]); 
-  const [categorias, setCategorias] = useState<ICategorias[]>([]);
-  const [selectedCategoria, setSelectedCategoria] = useState<string>("");
-  const producsServices = new ProductServices(
+  const [products, setProducts] = useState<IProductos[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProductos[]>([]);
+  const [subCategorias, setSubCategorias] = useState<ICategorias[]>([]);
+  const [selectedSubCategoria, setSelectedSubCategoria] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [pageSize] = useState<number>(5);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [selectedProduct, setSelectedProduct] = useState<IProductos | null>(
+    null
+  );
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
+  const productServices = new ProductServices(
     "http://190.221.207.224:8090/articulos"
   );
   const categoriesServices = new CategoriesServices(
     "http://190.221.207.224:8090/categorias"
   );
+  const sucursalActiva = useAppSelector(
+    (state: RootState) => state.conectCompanyBranchSlice.activeBranch
+  );
 
-  const sucursalActiva = useAppSelector((state: RootState) => state.conectCompanyBranchSlice.activeBranch);
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
 
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
-
-  const fetchProducts = async () => {
+  const fetchProducts = async (page: number) => {
     try {
-      const data = await producsServices.getAllProductsForBranch(sucursalActiva? sucursalActiva.id : 0); 
-      setProducts(data); 
+      const data = await productServices.getPagedProductsForBranch(
+        sucursalActiva ? sucursalActiva.id : 0,
+        page,
+        pageSize
+      );
+      setProducts(data.content); // Establece los productos obtenidos
+      setFilteredProducts(data.content); // También establece los productos filtrados
+      setTotalPages(data.totalPages); // Actualiza las páginas totales
     } catch (error) {
       console.error("Error al obtener productos:", error);
     }
   };
 
   const fetchCategorias = async () => {
-    const data = await categoriesServices.getAllCategoriesForBranch(sucursalActiva? sucursalActiva.id : 0); 
-    setCategorias(data);
+    try {
+      const data: ICategorias[] =
+        await categoriesServices.getAllCategoriesPadreForBranch(
+          sucursalActiva ? sucursalActiva.id : 0
+        );
+      const allSubCategorias = data.flatMap(
+        (categoria) => categoria.subCategorias
+      );
+      setSubCategorias(allSubCategorias);
+    } catch (error) {
+      console.error("Error al obtener categorías:", error);
+    }
   };
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts(currentPage);
     fetchCategorias();
-  }, []);
+  }, [currentPage, sucursalActiva]);
+
+  useEffect(() => {
+    if (selectedSubCategoria) {
+      // Filtra productos por subcategoría seleccionada
+      const filtered = products.filter(
+        (product) => product.categoria.denominacion === selectedSubCategoria
+      );
+      setFilteredProducts(filtered);
+    } else {
+      // Si no hay filtro, muestra todos los productos
+      setFilteredProducts(products);
+    }
+  }, [selectedSubCategoria, products]);
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategoria(event.target.value);
+    setSelectedSubCategoria(event.target.value);
+    setCurrentPage(0);
   };
 
-  const filteredProductos = selectedCategoria
-    ? products.filter(
-        (producto) => producto.categoria.denominacion === selectedCategoria
-      )
-    : products;
+  const handlePageChange = (page: number) => {
+    if (page >= 0 && page < totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const handleDeleteProduct = async (product : IProductos) => {
+    try {
+      if (product) {
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger",
+          },
+        });
+
+        swalWithBootstrapButtons
+          .fire({
+            title: "¿Estás seguro?",
+            text: `Eliminar producto ${product.denominacion}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            background: "#313131",
+            color: "white",
+            reverseButtons: true,
+          })
+          .then(async (result) => {
+            if (result.isConfirmed) {
+              await productServices.delete(product.id); // Espera a que se elimine el alérgeno
+              await fetchProducts(currentPage); // Llama a fetchAllergens después de eliminar
+              swalWithBootstrapButtons.fire({
+                title: "Eliminado!",
+                text: "El producto fue eliminado.",
+                icon: "success",
+                background: "#313131",
+                color: "white",
+              });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              swalWithBootstrapButtons.fire({
+                title: "Cancelado!",
+                text: "Tu producto está a salvo :)",
+                icon: "error",
+                background: "#313131",
+                color: "white",
+              });
+            }
+          });
+      }
+    } catch (error) {
+      console.error("Error al eliminar el producto:", error);
+    }
+  };
   const handleView = (id: number) => {
-    // Lógica para ver el producto
+    const product = products.find((a) => a.id === id);
+    if (product) {
+      setSelectedProduct(product);
+      setIsViewModalOpen(true);
+    }
   };
 
   const handleEdit = (id: number) => {
-    // Lógica para editar el producto
+    const product = products.find((a) => a.id === id);
+    if (product) {
+      setSelectedProduct(product);
+      setIsUpdateModalOpen(true);
+    }
   };
 
   const handleDelete = (id: number) => {
-    // Lógica para eliminar el producto
- 
+    const product = products.find((a) => a.id === id);
+    if (product) {
+      handleDeleteProduct(product)
+    }
   };
 
   const buttonsOfProductsTable = (id: number) => (
@@ -120,151 +218,107 @@ export const Products: React.FC = () => {
     </div>
   );
 
-  const checkBoxProductsTable = () => {
-    return (
-      <svg
-        style={{ width: "20px", height: "20px" }}
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        className="bi bi-check-circle"
-        viewBox="0 0 16 16">
-        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-        <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
-      </svg>
-    );
-  };
-
-  const exBoxProductsTable = () => {
-    return (
-      <svg
-        style={{ width: "20px", height: "20px" }}
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        className="bi bi-x-circle"
-        viewBox="0 0 16 16">
-        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-      </svg>
-    );
-  };
-
   return (
     <div className="activeScreenAdmin" style={{ color: "white" }}>
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center",
           padding: "10px",
           color: "white",
         }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "left",
-            alignItems: "center",
-            gap: "5px",
-          }}>
-          <label htmlFor="categoria-filter">Filtrar por categoría:</label>
+        <div>
+          <label htmlFor="categoria-filter">Filtrar por subcategoría:</label>
           <select
-            style={{
-              color: "white",
-              backgroundColor: "rgb(49, 49, 49)",
-              border: "solid 1px white",
-              height: "50px",
-              borderRadius: "12px",
-            }}
-            onChange={handleFilterChange}>
+            onChange={handleFilterChange}
+            style={{ color: "white", backgroundColor: "rgb(49, 49, 49)" }}>
             <option value="">Todas</option>
-            {categorias.map((categoria) => (
-              <option key={categoria.id} value={categoria.denominacion}>
-                {categoria.denominacion}
+            {subCategorias.map((subCategoria) => (
+              <option key={subCategoria.id} value={subCategoria.denominacion}>
+                {subCategoria.denominacion}
               </option>
             ))}
           </select>
         </div>
-        <div
+        <button
           style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "right",
-            alignItems: "center",
-            gap: "5px",
-          }}>
-          <button
-            onClick={handleOpenModal}
-            style={{
-              color: "white",
-              backgroundColor: "rgb(49, 49, 49)",
-              border: "solid 1px white",
-              borderRadius: "12px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "5px",
-              padding: "5px",
-            }}
-            id="addProduct">
-            Agregar Producto{" "}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-plus-lg"
-              viewBox="0 0 16 16">
-              <path
-                fillRule="evenodd"
-                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-              />
-            </svg>
-          </button>
-          {isModalOpen && (
-            <ProductsModal
-              onClose={handleCloseModal}
-              fetchProducts={fetchProducts}
-            />
-          )}
-        </div>
+            backgroundColor: "transparent",
+            color: "red",
+            border: "solid 1px red",
+            borderRadius: "12px",
+            padding: "5px",
+          }}
+          onClick={handleOpenModal}>
+          Agregar Producto
+        </button>
+        {isModalOpen && (
+          <ProductsModal
+            onClose={handleCloseModal}
+            fetchProducts={() => fetchProducts(currentPage)}
+          />
+        )}
+        {isViewModalOpen && selectedProduct && (
+          <ViewProductModal
+            product={selectedProduct}
+            onClose={() => setIsViewModalOpen(false)}
+          />
+        )}
+        {isUpdateModalOpen && selectedProduct && (
+          <UpdateProductModal
+            product={selectedProduct}
+            categorias={subCategorias}
+            onClose={() => setIsUpdateModalOpen(false)}
+            fetchProducts={() => fetchProducts(currentPage)}
+          />
+        )}
       </div>
 
-      <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "100vh" }}>
+      <div style={{ overflowX: "auto" }}>
         <table className="table table-dark table-hover">
           <thead>
             <tr>
-              <th scope="col">NOMBRE</th>
-              <th scope="col">PRECIO</th>
-              <th scope="col">DESCRIPCION</th>
-              <th scope="col">CATEGORIA</th>
-              <th scope="col">HABILITADO</th>
-              <th scope="col">ACCIONES</th>
+              <th>NOMBRE</th>
+              <th>PRECIO</th>
+              <th>DESCRIPCION</th>
+              <th>CATEGORIA</th>
+              <th>HABILITADO</th>
+              <th>ACCIONES</th>
             </tr>
           </thead>
           <tbody>
-            {filteredProductos.map((product) => (
+            {filteredProducts.map((product) => (
               <tr key={product.id}>
-                <th scope="row">{product.denominacion}</th>
+                <td>{product.denominacion}</td>
                 <td>{product.precioVenta}</td>
                 <td>{product.descripcion}</td>
                 <td>{product.categoria.denominacion}</td>
-                <td>
-                  {product.habilitado
-                    ? checkBoxProductsTable()
-                    : exBoxProductsTable()}
-                </td>
+                <td>{product.habilitado ? "✔️" : "❌"}</td>
                 <td>{buttonsOfProductsTable(product.id)}</td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
 
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "20px",
+        }}>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            onClick={() => handlePageChange(index)}
+            style={{
+              margin: "0 5px",
+              padding: "5px 10px",
+              backgroundColor: currentPage === index ? "gray" : "white",
+              color: currentPage === index ? "white" : "black",
+            }}>
+            {index + 1}
+          </button>
+        ))}
       </div>
     </div>
   );

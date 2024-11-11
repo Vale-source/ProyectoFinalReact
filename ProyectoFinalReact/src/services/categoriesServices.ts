@@ -18,6 +18,12 @@ export class CategoriesServices extends BackendClient <ICategorias | ICreateCate
 		return data as ICategorias[];
 	}    
 
+	async getAllCategoriesPadreForBranch(id: number): Promise<ICategorias[]> {
+		const response = await fetch(`${this.baseUrl}/allCategoriasPadrePorSucursal/${id}`);
+		const data = await response.json();
+		return data as ICategorias[];
+	}    
+
     async updateCategory(id: number, data: IUpdateCategoria): Promise<ICategorias> {
 		const response = await fetch(`${this.baseUrl}/update/${id}`, {
 			method: "PUT",

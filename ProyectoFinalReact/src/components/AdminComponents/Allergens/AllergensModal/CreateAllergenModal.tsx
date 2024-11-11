@@ -9,6 +9,8 @@ interface CreateAllergenModalProps {
 const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAllergenWithImage }) => {
   const [nombre, setNombre] = useState("");
   const [imagen, setImagen] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);  // Estado para el loading
+  const [error, setError] = useState<string | null>(null);  // Estado para los errores
 
   const handleConfirm = async () => {
     if (!nombre || !imagen) {
@@ -22,6 +24,9 @@ const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAll
       return;
     }
 
+    setLoading(true);  // Activar el loading
+    setError(null);  // Limpiar el error
+
     try {
       await createAllergenWithImage(imagen, nombre);
       Swal.fire({
@@ -34,6 +39,9 @@ const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAll
       onClose();
     } catch (error) {
       console.error("Error al crear el alérgeno:", error);
+      setError("Hubo un error al crear el alérgeno.");
+    } finally {
+      setLoading(false);  // Desactivar el loading
     }
   };
 
@@ -118,30 +126,41 @@ const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAll
             <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0" />
           </svg>
         </div>
+        {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
         <div style={{ display: "flex", justifyContent: "space-around" }}>
           <button
             onClick={onClose}
             style={{
-              backgroundColor: "red",
+              backgroundColor: "#f44336",  // Rojo
               color: "white",
               borderRadius: "10px",
               width: "150px",
               border: "1px solid white",
+              padding: "10px",
+              fontSize: "16px",
+              cursor: "pointer",
+              transition: "background-color 0.3s ease",
             }}
+            disabled={loading}  // Deshabilitar el botón mientras carga
           >
-            Cancelar
+            {loading ? "Cargando..." : "Cancelar"}
           </button>
           <button
             onClick={handleConfirm}
             style={{
-              backgroundColor: "green",
+              backgroundColor: "#4CAF50",  // Verde
               color: "white",
               borderRadius: "10px",
               width: "150px",
               border: "1px solid white",
+              padding: "10px",
+              fontSize: "16px",
+              cursor: "pointer",
+              transition: "background-color 0.3s ease",
             }}
+            disabled={loading}  // Deshabilitar el botón mientras carga
           >
-            Confirmar
+            {loading ? "Cargando..." : "Confirmar"}
           </button>
         </div>
       </div>
