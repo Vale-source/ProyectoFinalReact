@@ -7,13 +7,13 @@ interface CreateAllergenModalProps {
 }
 
 const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAllergenWithImage }) => {
-  const [nombre, setNombre] = useState("");
-  const [imagen, setImagen] = useState<File | null>(null);
-  const [loading, setLoading] = useState(false);  // Estado para el loading
-  const [error, setError] = useState<string | null>(null);  // Estado para los errores
+  const [name, setName] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState<string | null>(null);  
 
   const handleConfirm = async () => {
-    if (!nombre || !imagen) {
+    if (!name || !image) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -24,15 +24,15 @@ const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAll
       return;
     }
 
-    setLoading(true);  // Activar el loading
-    setError(null);  // Limpiar el error
+    setLoading(true);  
+    setError(null);  
 
     try {
-      await createAllergenWithImage(imagen, nombre);
+      await createAllergenWithImage(image, name);
       Swal.fire({
         icon: "success",
         title: "Confirmado!",
-        text: `El alergeno ${nombre} ha sido creado con exito!`,
+        text: `El alergeno ${name} ha sido creado con exito!`,
         background: "#313131",
         color: "white",
       });
@@ -41,7 +41,7 @@ const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAll
       console.error("Error al crear el alérgeno:", error);
       setError("Hubo un error al crear el alérgeno.");
     } finally {
-      setLoading(false);  // Desactivar el loading
+      setLoading(false); 
     }
   };
 
@@ -87,10 +87,10 @@ const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAll
             color: "white",
           }}
           type="text"
-          name="nombre"
+          name="name"
           placeholder="Ingresa una denominación"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <div
           style={{
@@ -106,11 +106,11 @@ const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAll
         >
           <input
             accept="image/*"
-            name="imagen"
+            name="image"
             type="file"
             onChange={(e) => {
               if (e.target.files && e.target.files[0]) {
-                setImagen(e.target.files[0]);
+                setImage(e.target.files[0]);
               }
             }}
           />
@@ -131,7 +131,7 @@ const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAll
           <button
             onClick={onClose}
             style={{
-              backgroundColor: "#f44336",  // Rojo
+              backgroundColor: "#f44336", 
               color: "white",
               borderRadius: "10px",
               width: "150px",
@@ -141,14 +141,14 @@ const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAll
               cursor: "pointer",
               transition: "background-color 0.3s ease",
             }}
-            disabled={loading}  // Deshabilitar el botón mientras carga
+            disabled={loading}  
           >
             {loading ? "Cargando..." : "Cancelar"}
           </button>
           <button
             onClick={handleConfirm}
             style={{
-              backgroundColor: "#4CAF50",  // Verde
+              backgroundColor: "#4CAF50",  
               color: "white",
               borderRadius: "10px",
               width: "150px",
@@ -158,7 +158,7 @@ const AllergensModal: React.FC<CreateAllergenModalProps> = ({ onClose, createAll
               cursor: "pointer",
               transition: "background-color 0.3s ease",
             }}
-            disabled={loading}  // Deshabilitar el botón mientras carga
+            disabled={loading}  
           >
             {loading ? "Cargando..." : "Confirmar"}
           </button>

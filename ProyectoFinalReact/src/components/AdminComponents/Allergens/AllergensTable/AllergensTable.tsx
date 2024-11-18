@@ -31,16 +31,13 @@ function Allergens() {
     );
 
     try {
-      // Subir la imagen al servidor
       const imagen = await imageService.uploadImage(file);
 
-      // Crear un objeto con los datos del alérgeno
       const allergenData: ICreateAlergeno = {
         denominacion: name,
         imagen: imagen,
       };
 
-      // Crear el alérgeno
       await allergenService.createAllergen(allergenData);
     } catch (error) {
       console.error("Error en el proceso de creación de alérgeno:", error);
@@ -60,14 +57,13 @@ function Allergens() {
     );
 
     try {
-      // Verifica si `file` es `null` antes de intentar subir una imagen
       const imagen = file
         ? await imageService.uploadImage(file)
         : allergen.imagen;
 
       const UpdateAllergenData: IUpdateAlergeno = {
         id: allergen.id,
-        denominacion: name || allergen.denominacion, // Usa `name` si está definido, de lo contrario el valor actual
+        denominacion: name || allergen.denominacion, 
         imagen: imagen,
       };
 
@@ -140,8 +136,8 @@ function Allergens() {
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-              await allergensServices.delete(allergen.id); // Espera a que se elimine el alérgeno
-              await fetchAllergens(); // Llama a fetchAllergens después de eliminar
+              await allergensServices.delete(allergen.id);
+              await fetchAllergens();
               swalWithBootstrapButtons.fire({
                 title: "Eliminado!",
                 text: "El alérgeno fue eliminado.",
@@ -165,7 +161,6 @@ function Allergens() {
     }
   };
 
-  // Función para manejar la edición, visualización y eliminación
   const handleView = (id: number) => {
     const allergen = allergens.find((a) => a.id === id);
     if (allergen) {

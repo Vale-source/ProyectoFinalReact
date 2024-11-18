@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 
 interface EditProductModalProps {
   product: IProductos;
-  categorias: ICategorias[]; // Lista de categorías, asegúrate de definir su tipo correctamente
+  categorias: ICategorias[]; 
   onClose: () => void;
   fetchProducts: () => void;
 }
@@ -34,7 +34,7 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
     idAlergenos: product.alergenos.map((alergeno) => alergeno.id),
   });
 
-  const [imagenesToUpload, setImagenesToUpload] = useState<File[]>([]); // Para múltiples imágenes
+  const [imagenesToUpload, setImagenesToUpload] = useState<File[]>([]);
   const [alergeno, setAlergeno] = useState<IAlergenos[] | null>(null);
   const [habilitado, setHabilitado] = useState<boolean>(product.habilitado);
   const [categoriaSelected, setCategoriaSelected] = useState<number>(
@@ -67,16 +67,15 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
     });
   };
 
-  // Para manejar los cambios de los alérgenos seleccionados
   const handleAlergenosChange = (
-    e: React.MouseEvent<HTMLDivElement>,
+    _e: React.MouseEvent<HTMLDivElement>,
     id: number
   ) => {
     setParseAlergenos(
       (prevIds) =>
         prevIds.includes(id)
-          ? prevIds.filter((prevId) => prevId !== id) // Deseleccionar
-          : [...prevIds, id] // Seleccionar
+          ? prevIds.filter((prevId) => prevId !== id) 
+          : [...prevIds, id] 
     );
   };
 
@@ -123,7 +122,6 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
       return;
     }
     try {
-      // Subir todas las imágenes seleccionadas
       const uploadedImages = await Promise.all(
         imagenesToUpload.map(async (img) => {
           const uploadedImage = await imageService.uploadImage(img);
@@ -206,7 +204,6 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
             gap: "15px",
             width: "100%",
           }}>
-          {/* Primera columna de inputs */}
           <div
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <label htmlFor="denominacion">Denominacion</label>
@@ -278,8 +275,6 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
                 <p>No hay alérgenos disponibles</p>
               )}
             </div>
-            {/* Imagenes */}
-
             <input
               type="file"
               onChange={handleImageChange}
@@ -293,8 +288,6 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
               }}
             />
           </div>
-
-          {/* Segunda columna de inputs */}
           <div
             style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <label htmlFor="descripcion">Descripción</label>
@@ -309,10 +302,10 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
                 height: "200px",
               }}
               placeholder="Ingrese una descripción"
-              value={values.descripcion} // Asegúrate de usar el estado correcto aquí
+              value={values.descripcion} 
               onChange={(e) =>
                 setValues({ ...values, descripcion: e.target.value })
-              } // Actualiza el estado al cambiar el texto
+              } 
             />
             <label htmlFor="precioVenta">Precio</label>
             <input
@@ -371,7 +364,6 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
           </div>
         </div>
 
-        {/* Mensajes de error */}
         {error && <div style={{ color: "red" }}>{error}</div>}
 
         <div

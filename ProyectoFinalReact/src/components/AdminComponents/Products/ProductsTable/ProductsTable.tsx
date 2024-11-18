@@ -46,9 +46,9 @@ export const Products: React.FC = () => {
         page,
         pageSize
       );
-      setProducts(data.content); // Establece los productos obtenidos
-      setFilteredProducts(data.content); // También establece los productos filtrados
-      setTotalPages(data.totalPages); // Actualiza las páginas totales
+      setProducts(data.content);
+      setFilteredProducts(data.content);
+      setTotalPages(data.totalPages); 
     } catch (error) {
       console.error("Error al obtener productos:", error);
     }
@@ -76,13 +76,11 @@ export const Products: React.FC = () => {
 
   useEffect(() => {
     if (selectedSubCategoria) {
-      // Filtra productos por subcategoría seleccionada
       const filtered = products.filter(
         (product) => product.categoria.denominacion === selectedSubCategoria
       );
       setFilteredProducts(filtered);
     } else {
-      // Si no hay filtro, muestra todos los productos
       setFilteredProducts(products);
     }
   }, [selectedSubCategoria, products]);
@@ -122,8 +120,8 @@ export const Products: React.FC = () => {
           })
           .then(async (result) => {
             if (result.isConfirmed) {
-              await productServices.delete(product.id); // Espera a que se elimine el alérgeno
-              await fetchProducts(currentPage); // Llama a fetchAllergens después de eliminar
+              await productServices.delete(product.id); 
+              await fetchProducts(currentPage); 
               swalWithBootstrapButtons.fire({
                 title: "Eliminado!",
                 text: "El producto fue eliminado.",

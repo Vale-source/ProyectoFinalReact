@@ -23,14 +23,14 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
   const [precioVenta, setPrecioVenta] = useState("");
   const [codigo, setCodigo] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [imagenesToUpload, setImagenesToUpload] = useState<File[]>([]); // Cambiar a un array
-  const [imagenes] = useState<IImagen[]>([]); // Cambiar a un array
+  const [imagenesToUpload, setImagenesToUpload] = useState<File[]>([]); 
+  const [imagenes] = useState<IImagen[]>([]); 
   const [categoriaId, setCategoriaId] = useState<number | undefined>();
   const [alergenosIds, setAlergenosIds] = useState<number[]>([]);
   const [categorias, setCategorias] = useState<ICategorias[]>([]);
   const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
   const [habilitado, setHabilitado] = useState<boolean>(false);
-  const [loading, setIsLoading] = useState<boolean>(false); // Estado de carga
+  const [loading, setIsLoading] = useState<boolean>(false); 
   const sucursalActiva = useAppSelector(
     (state: RootState) => state.conectCompanyBranchSlice.activeBranch
   );
@@ -42,7 +42,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
       const data: ICategorias[] =
         await categoriesServices.getAllCategoriesForBranch(
           sucursalActiva ? sucursalActiva.id : 0
-        ); //reemplazar con id de la sucursal seleccionada
+        ); 
       setCategorias(data);
     };
 
@@ -85,7 +85,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
       codigo,
       idCategoria: categoriaId as number,
       idAlergenos: alergenosIds,
-      imagenes: imagenes.map((img) => ({ name: img.name, url: img.url })), // Usar el array de imágenes
+      imagenes: imagenes.map((img) => ({ name: img.name, url: img.url })), 
     };
 
     const imageService = new ImagesServices(
@@ -93,7 +93,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
     );
 
     try {
-      setIsLoading(true); // Activar el estado de carga
+      setIsLoading(true); 
       const uploadedImages = await Promise.all(
         imagenesToUpload.map(async (img) => {
           const uploadedImage = await imageService.uploadImage(img);
@@ -115,7 +115,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
         background: "#313131",
         color: "white",
       });
-      onClose(); // Cerrar el modal solo si la creación fue exitosa
+      onClose(); 
       fetchProducts();
     } catch (error) {
       console.error("Error al crear el producto:", error);
@@ -210,8 +210,8 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
                     setAlergenosIds(
                       (prevIds) =>
                         prevIds.includes(alergeno.id)
-                          ? prevIds.filter((id) => id !== alergeno.id) // Deseleccionar si ya está seleccionado
-                          : [...prevIds, alergeno.id] // Seleccionar si no está en la lista
+                          ? prevIds.filter((id) => id !== alergeno.id) 
+                          : [...prevIds, alergeno.id] 
                     );
                   }}
                   style={{
@@ -302,7 +302,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
                   multiple
                   onChange={(e) => {
                     if (e.target.files) {
-                      setImagenesToUpload(Array.from(e.target.files)); // Almacenar múltiples imágenes
+                      setImagenesToUpload(Array.from(e.target.files));
                     }
                   }}
                 />
@@ -325,7 +325,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
           <button
             onClick={onClose}
             style={{
-              backgroundColor: "#f44336",  // Rojo
+              backgroundColor: "#f44336",  
               color: "white",
               borderRadius: "10px",
               width: "150px",
@@ -335,14 +335,14 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
               cursor: "pointer",
               transition: "background-color 0.3s ease",
             }}
-            disabled={loading}  // Deshabilitar el botón mientras carga
+            disabled={loading}  
           >
             {loading ? "Cargando..." : "Cancelar"}
           </button>
           <button
             onClick={handleConfirm}
             style={{
-              backgroundColor: "#4CAF50",  // Verde
+              backgroundColor: "#4CAF50",  
               color: "white",
               borderRadius: "10px",
               width: "150px",
@@ -352,7 +352,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
               cursor: "pointer",
               transition: "background-color 0.3s ease",
             }}
-            disabled={loading}  // Deshabilitar el botón mientras carga
+            disabled={loading}  
           >
             {loading ? "Cargando..." : "Confirmar"}
           </button>

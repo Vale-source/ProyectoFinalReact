@@ -12,14 +12,12 @@ export const ViewProductModal: FC<ViewProductModalProps> = ({
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Función para ir a la siguiente imagen
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === product.imagenes.length - 1 ? 0 : prevIndex + 1
     );
   };
 
-  // Función para ir a la imagen anterior
   const handlePreviousImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? product.imagenes.length - 1 : prevIndex - 1
@@ -114,7 +112,6 @@ export const ViewProductModal: FC<ViewProductModalProps> = ({
             <p>Imagen no disponible</p>
           )}
 
-          {/* Sección de Alérgenos */}
           <div style={{ marginTop: "10px", color: "white" }}>
             <h4>Alérgenos:</h4>
             {product.alergenos && product.alergenos.length > 0 ? (

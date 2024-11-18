@@ -1,6 +1,4 @@
 import { FC } from "react";
-
-import React from "react";
 import { IAlergenos } from "../../../../types/dtos/alergenos/IAlergenos";
 
 interface ViewAllergenModalProps {
@@ -50,11 +48,11 @@ const ViewAllergenModal: FC<ViewAllergenModalProps> = ({
                 src={allergen.imagen.url}
                 alt={allergen.denominacion}
                 style={{
-                  width: "300px", // Ancho fijo para la imagen
-                  height: "300px", // Alto fijo para la imagen
-                  objectFit: "cover", // Recorta la imagen manteniendo la proporción
-                  display: "block", // Quita el espacio extra que pueden tener los elementos inline
-                  margin: "0 auto", // Centra la imagen horizontalmente
+                  width: "300px", 
+                  height: "300px", 
+                  objectFit: "cover", 
+                  display: "block", 
+                  margin: "0 auto", 
                   borderRadius: "8px",
                 }}
               />
@@ -66,7 +64,7 @@ const ViewAllergenModal: FC<ViewAllergenModalProps> = ({
             <button
               onClick={onClose}
               style={{
-                backgroundColor: "#f44336",  // Rojo
+                backgroundColor: "#f44336", 
                 color: "white",
                 borderRadius: "10px",
                 width: "150px",

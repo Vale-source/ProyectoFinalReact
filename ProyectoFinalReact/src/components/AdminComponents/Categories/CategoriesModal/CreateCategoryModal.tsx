@@ -13,11 +13,11 @@ const CreateCategoryModal: React.FC<CreateCategoryModal> = ({
   onClose,
   fetchCategories,
 }) => {
-  const sucursalActiva = useAppSelector(
+  const activeBranch = useAppSelector(
     (state: RootState) => state.conectCompanyBranchSlice.activeBranch
   );
   const [denominacion, setDenominacion] = useState<string>("");
-  const idEmpresa = sucursalActiva?.empresa?.id || 0;
+  const idEmpresa = activeBranch?.empresa?.id || 0;
   const [loading, setLoading] = useState(false);
   const categoriesServices = new CategoriesServices(
     "http://190.221.207.224:8090/categorias"

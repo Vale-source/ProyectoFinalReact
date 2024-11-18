@@ -5,8 +5,7 @@ import { AsideCompanyModal } from "./modals/AsideCompanyModal";
 import { ListCompany } from "./ListCompany";
 import { IEmpresa } from "../../types/dtos/empresa/IEmpresa";
 import { CompanyServices } from "../../services/companyServices";
-import { ImagesServices } from "../../services/imagesService"; // Importamos el servicio de imágenes
-
+import { ImagesServices } from "../../services/imagesService"; 
 const AsideCompany = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [activeCompany, setActiveCompany] = useState<ICreateEmpresaDto>({

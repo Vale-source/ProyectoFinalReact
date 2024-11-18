@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import Swal from "sweetalert2";
 import { IUpdateEmpresaDto } from "../../../types/dtos/empresa/IUpdateEmpresaDto";
 import { CompanyServices } from "../../../services/companyServices";
-import { ImagesServices } from "../../../services/imagesService"; // Importamos el servicio de imágenes
+import { ImagesServices } from "../../../services/imagesService"; 
 
 interface IPropsEditData {
 	company: IUpdateEmpresaDto | null;
@@ -34,7 +34,7 @@ export const AsideCompanyEditModal: FC<IPropsEditData> = ({
 		const { name, value } = e.target;
 
 		if (name === "cuit") {
-			const numericValue = value.replace(/\D/g, ""); // Remuevo caracteres no numéricos
+			const numericValue = value.replace(/\D/g, "");
 
 			setNewData({
 				...newData,
@@ -66,7 +66,6 @@ export const AsideCompanyEditModal: FC<IPropsEditData> = ({
 				logo: imageUrl, 
 			};
 
-			// Actualizar la empresa
 			await companyServices.put(company.id, updatedCompanyData);
 		} catch (error) {
 			console.error("Error al actualizar la empresa:", error);
@@ -133,7 +132,7 @@ export const AsideCompanyEditModal: FC<IPropsEditData> = ({
 							</h2>
 						</div>
 						<div className="modal-body" style={{ margin: "0.4rem", padding: "0.4rem" }}>
-							<form onSubmit={handleSubmitNewData}> {/* Eliminar parámetro `id` */}
+							<form onSubmit={handleSubmitNewData}> 
 								<div className="mb-3">
 									<input
 										className="form-control"

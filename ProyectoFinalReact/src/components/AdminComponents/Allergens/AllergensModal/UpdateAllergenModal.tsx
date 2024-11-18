@@ -18,27 +18,25 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
   updateAllergenWithImage,
   onClose,
 }) => {
-  const [nombre, setNombre] = useState(allergen?.denominacion || "");
-  const [imagen, setImagen] = useState<File | null>(null);
+  const [name, setName] = useState(allergen?.denominacion || "");
+  const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Maneja el cambio de imagen
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setImagen(e.target.files[0]);
+      setImage(e.target.files[0]);
     }
   };
 
-  // Maneja la actualización del alérgeno
   const handleUpdate = async () => {
     if (allergen) {
-      setLoading(true); // Inicia el estado de carga
+      setLoading(true); 
       try {
-        await updateAllergenWithImage(imagen, allergen, nombre);
+        await updateAllergenWithImage(image, allergen, name);
         Swal.fire({
           icon: "success",
           title: "Confirmado!",
-          text: `El alergeno ${nombre} ha sido actualizado con éxito!`,
+          text: `El alergeno ${name} ha sido actualizado con éxito!`,
           background: "#313131",
           color: "white",
         });
@@ -53,7 +51,7 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
           color: "white",
         });
       } finally {
-        setLoading(false); // Termina el estado de carga
+        setLoading(false); 
       }
     }
   };
@@ -100,10 +98,10 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
             color: "white",
           }}
           type="text"
-          name="nombre"
+          name="name"
           placeholder="Ingresa una denominación"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <div
           style={{
@@ -119,7 +117,7 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
         >
           <input
             accept="image/*"
-            name="imagen"
+            name="image"
             type="file"
             onChange={handleImageChange}
           />
@@ -139,7 +137,7 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
           <button
             onClick={onClose}
             style={{
-              backgroundColor: "#f44336",  // Rojo
+              backgroundColor: "#f44336", 
               color: "white",
               borderRadius: "10px",
               width: "150px",
@@ -149,14 +147,14 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
               cursor: "pointer",
               transition: "background-color 0.3s ease",
             }}
-            disabled={loading}  // Deshabilitar el botón mientras carga
+            disabled={loading} 
           >
             {loading ? "Cargando..." : "Cancelar"}
           </button>
           <button
             onClick={handleUpdate}
             style={{
-              backgroundColor: "#4CAF50",  // Verde
+              backgroundColor: "#4CAF50", 
               color: "white",
               borderRadius: "10px",
               width: "150px",
@@ -166,7 +164,7 @@ export const UpdateAllergenModal: FC<UpdateAllergenModalProps> = ({
               cursor: "pointer",
               transition: "background-color 0.3s ease",
             }}
-            disabled={loading}  // Deshabilitar el botón mientras carga
+            disabled={loading}  
           >
             {loading ? "Cargando..." : "Confirmar"}
           </button>

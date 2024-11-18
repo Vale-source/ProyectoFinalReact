@@ -51,7 +51,6 @@ export const AsideCompanyModal: React.FC<IPropsModalCompany> = ({
 									/>
 								</div>
 
-								{/* Input para subir el archivo (logo) */}
 								<div className="mb-3">
 									<input
 										className="form-control"
