@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 
 interface EditProductModalProps {
   product: IProductos;
-  categorias: ICategorias[]; 
+  categorias: ICategorias[];
   onClose: () => void;
   fetchProducts: () => void;
 }
@@ -68,14 +68,13 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
   };
 
   const handleAlergenosChange = (
-    _e: React.MouseEvent<HTMLDivElement>,
+    e: React.MouseEvent<HTMLDivElement>,
     id: number
   ) => {
-    setParseAlergenos(
-      (prevIds) =>
-        prevIds.includes(id)
-          ? prevIds.filter((prevId) => prevId !== id) 
-          : [...prevIds, id] 
+    setParseAlergenos((prevIds) =>
+      prevIds.includes(id)
+        ? prevIds.filter((prevId) => prevId !== id)
+        : [...prevIds, id]
     );
   };
 
@@ -98,7 +97,6 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
   const handleCategoriaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategoriaSelected(parseInt(e.target.value));
   };
-
 
   const handleSave = async () => {
     setLoading(true);
@@ -134,9 +132,9 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
         denominacion: values.denominacion,
         precioVenta: values.precioVenta,
         descripcion: values.descripcion,
-        codigo: values.codigo,
         habilitado: values.habilitado,
         eliminado: values.eliminado,
+        codigo: values.codigo,
         imagenes: uploadedImages.length > 0 ? uploadedImages : values.imagenes,
         idCategoria: categoriaSelected,
         idAlergenos: parseAlergenos,
@@ -146,7 +144,7 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
       onClose();
       fetchProducts();
     } catch (err) {
-      setError("Hubo un error al guardar el producto.");
+      setError("Hubo un error al editar el producto.");
     } finally {
       setLoading(false);
     }
@@ -302,10 +300,10 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
                 height: "200px",
               }}
               placeholder="Ingrese una descripción"
-              value={values.descripcion} 
+              value={values.descripcion}
               onChange={(e) =>
                 setValues({ ...values, descripcion: e.target.value })
-              } 
+              }
             />
             <label htmlFor="precioVenta">Precio</label>
             <input
@@ -347,12 +345,13 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
                 padding: "10px",
                 height: "40px",
               }}>
-              <label style={{ display: "flex", alignItems: "center", gap: "290px" }}>
+              <label
+                style={{ display: "flex", alignItems: "center", gap: "290px" }}>
                 Habilitado
                 <input
                   type="checkbox"
+                  name="habilitado"
                   checked={habilitado}
-                  
                   onChange={(e) => {
                     setHabilitado((prev) => !prev);
                     handleInputChange(e);

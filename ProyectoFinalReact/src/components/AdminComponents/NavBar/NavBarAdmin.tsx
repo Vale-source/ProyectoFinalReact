@@ -11,7 +11,6 @@ const NavBarAdmin = () => {
   const sucursalActiva = useSelector(
     (state: RootState) => state.conectCompanyBranchSlice.activeBranch
   );
-  console.log(sucursalActiva);
   return (
     <div className="NavBarAdmin">
       <button onClick={handleNavigate}>

@@ -40,9 +40,9 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
         "http://190.221.207.224:8090/categorias"
       );
       const data: ICategorias[] =
-        await categoriesServices.getAllCategoriesForBranch(
+        await categoriesServices.getAllCategoriesPadreForBranch(
           sucursalActiva ? sucursalActiva.id : 0
-        ); 
+        );
       setCategorias(data);
     };
 
@@ -126,8 +126,8 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
         background: "#313131",
         color: "white",
       });
-    }finally{
-      setIsLoading(false); 
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -177,17 +177,28 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
               onChange={(e) => setDenominacion(e.target.value)}
             />
             <select
-            style={{ backgroundColor: "black", color: "white" }}
+              style={{ backgroundColor: "black", color: "white" }}
               name="categoria"
               onChange={(e) => setCategoriaId(Number(e.target.value))}
               value={categoriaId}>
               <option value="">Seleccionar categoría</option>
               {categorias.map((categoria) => (
-                <option key={categoria.id} value={categoria.id}>
-                  {categoria.denominacion}
-                </option>
+                <>
+                  <option
+                    key={`padre-${categoria.id}`}
+                    value={categoria.id}
+                    disabled={categoria.subCategorias.length > 0}>
+                    {categoria.denominacion}
+                  </option>
+                  {categoria.subCategorias.map((subCategoria) => (
+                    <option key={subCategoria.id} value={subCategoria.id}>
+                      &nbsp;&nbsp;{subCategoria.denominacion}
+                    </option>
+                  ))}
+                </>
               ))}
             </select>
+
             <div
               style={{
                 display: "grid",
@@ -252,7 +263,8 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
                 padding: "10px",
                 height: "40px",
               }}>
-              <label style={{ display: "flex", alignItems: "center", gap: "250px" }}>
+              <label
+                style={{ display: "flex", alignItems: "center", gap: "250px" }}>
                 Habilitado
                 <input
                   type="checkbox"
@@ -302,7 +314,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
                   multiple
                   onChange={(e) => {
                     if (e.target.files) {
-                      setImagenesToUpload(Array.from(e.target.files));
+                      setImagenesToUpload(Array.from(e.target.files)); 
                     }
                   }}
                 />
@@ -325,7 +337,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
           <button
             onClick={onClose}
             style={{
-              backgroundColor: "#f44336",  
+              backgroundColor: "#f44336", 
               color: "white",
               borderRadius: "10px",
               width: "150px",
@@ -335,14 +347,14 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
               cursor: "pointer",
               transition: "background-color 0.3s ease",
             }}
-            disabled={loading}  
+            disabled={loading} 
           >
             {loading ? "Cargando..." : "Cancelar"}
           </button>
           <button
             onClick={handleConfirm}
             style={{
-              backgroundColor: "#4CAF50",  
+              backgroundColor: "#4CAF50", 
               color: "white",
               borderRadius: "10px",
               width: "150px",
@@ -352,7 +364,7 @@ const ProductsModal: React.FC<ProductsModalProps> = ({
               cursor: "pointer",
               transition: "background-color 0.3s ease",
             }}
-            disabled={loading}  
+            disabled={loading} 
           >
             {loading ? "Cargando..." : "Confirmar"}
           </button>
