@@ -1,0 +1,551 @@
+/* Estilos para el contenedor principal */
+.parent {
+	display: grid;
+	grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr; /* Define las columnas de la cuadrícula */
+	grid-template-rows: 100px 2fr 1fr 1fr 1fr; /* Define las filas de la cuadrícula */
+	grid-column-gap: 0px; /* Espacio entre columnas */
+	grid-row-gap: 0px; /* Espacio entre filas */
+	width: 100vw; /* Ancho del contenedor */
+	height: 100vh; /* Alto del contenedor */
+	position: fixed; /* Fija el contenedor en la pantalla */
+	top: 0; /* Posición superior */
+	left: 0; /* Posición izquierda */
+	margin: 0; /* Sin margen */
+}
+
+/* Estilos para el aside general */
+.asideGeneral {
+	grid-area: 1 / 1 / 6 / 2; /* Área de la cuadrícula que ocupa */
+	display: flex; /* Usa flexbox para el contenido interno */
+	flex-direction: column; /* Dirección de los elementos internos */
+	gap: 10px; /* Espacio entre elementos internos */
+	background-color: rgb(40, 39, 39); /* Color de fondo */
+	color: white; /* Color del texto */
+	text-align: center; /* Alineación del texto */
+	padding: 40px; /* Relleno interno */
+	position: relative;
+	overflow: hidden;
+}
+
+/* Estilos para el aside Admin */
+.asideAdmin {
+    grid-area: 2 / 1 / 6 / 2; /* Área de la cuadrícula que ocupa */
+    display: flex; /* Usa flexbox para el contenido interno */
+    flex-direction: column; /* Dirección de los elementos internos */
+    gap: 10px; /* Espacio entre elementos internos */
+    background-color: rgb(40, 39, 39); /* Color de fondo */
+    color: white; /* Color del texto */
+    text-align: center; /* Alineación del texto */
+    padding: 40px; /* Relleno interno */
+}
+
+
+
+/* Estilos para los encabezados dentro del aside general */
+.asideGeneral h1 {
+	text-shadow: 4px 4px 0px black, -4px -4px 0px black, 4px -4px 0px black,
+		-4px 4px 0px black; /* Sombra del texto */
+}
+
+/* Estilos para los encabezados dentro del aside Admin */
+.asideAdmin h1 {
+    text-shadow:
+    4px 4px 0px black, 
+    -4px -4px 0px black, 
+    4px -4px 0px black,  
+    -4px 4px 0px black; /* Sombra del texto */
+}
+
+/* Estilos para los botones dentro del aside de Admin */
+.asideAdmin button {
+    border-radius: 12px; /* Bordes redondeados */
+    height: 50px; /* Altura del botón */
+    width: 200px; /* Ancho del botón */
+    border: 1px solid black; /* Borde del botón */
+    margin-top: 10px; /* Margen superior */
+    margin-bottom: 10px; /* Margen inferior */
+    margin-left: auto;
+    margin-right: auto;
+    background-color: gray; /* Color de fondo */
+    color: white; /* Color del texto */
+    font-size: 19px; /* Tamaño de la fuente */
+    text-shadow:
+    1px 1px 0px black,  
+    -1px -1px 0px black, 
+    1px -1px 0px black,  
+    -1px 1px 0px black; /* Sombra del texto */
+    transition: background-color 0.3s ease, font-size 0.3s ease, box-shadow 0.3s ease;
+    /* Transición suave de 0.3 segundos para cada propiedad */
+}
+
+/* Estilos para la animacion de los botones dentro del aside de Admin */
+.asideAdmin button:hover {
+    background-color: #555; /* Cambia el color de fondo al pasar el mouse */
+    font-size: 21px; /* Aumenta el tamaño del texto al hacer hover */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Sombra suave alrededor del botón */
+  }
+/* Estilos para la barra de navegación general */
+.NavBarGeneral {
+    grid-area: 1 / 2 / 2 / 6; /* Área de la cuadrícula que ocupa */
+    background-color: black; /* Color de fondo */
+    height: 100px; /* Altura de la barra */
+    display: flex; /* Usa flexbox para el contenido interno */
+    align-items: center; /* Alineación vertical de los elementos */
+    justify-content: center; /* Alineación horizontal de los elementos */
+    gap: 50px; /* Espacio entre elementos internos */
+}
+/* Estilos para la barra de navegación de Admin */
+.NavBarAdmin {
+    grid-area: 1 / 1 / 2 / 6; /* Área de la cuadrícula que ocupa */
+    background-color: rgb(30, 30, 31); /* Color de fondo */
+    height: 100px; /* Altura de la barra */
+    display: flex; /* Usa flexbox para el contenido interno */
+    align-items: center; /* Alineación vertical de los elementos */
+    justify-content: left; /* Alineación horizontal de los elementos */
+    gap: 50px; /* Espacio entre elementos internos */
+    transition: background-color 0.3s ease, font-size 0.3s ease, box-shadow 0.3s ease;
+    /* Transición suave de 0.3 segundos para cada propiedad */
+}
+
+/* Estilos para los botones dentro de la barra de navegación */
+.NavBarAdmin button:hover {
+    background-color: #555; /* Cambia el color de fondo al pasar el mouse */
+    font-size: 21px; /* Aumenta el tamaño del texto al hacer hover */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Sombra suave alrededor del botón */
+  }
+
+/* Estilos para los encabezados dentro de la barra de navegación */
+.NavBarGeneral h1 {
+    color: white; /* Color del texto */
+}
+
+/* Estilos para los botones dentro de la barra de navegación */
+.NavBarGeneral button {
+	border-radius: 30px; /* Bordes redondeados */
+	height: 35px; /* Altura del botón */
+	width: 200px; /* Ancho del botón */
+	border: 1px solid rgb(255, 255, 255); /* Borde del botón */
+	margin-top: 10px; /* Margen superior */
+	margin-bottom: 10px; /* Margen inferior */
+	background-color: black; /* Color de fondo */
+	color: white; /* Color del texto */
+	font-size: 19px; /* Tamaño de la fuente */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Estilos para los botones dentro de la barra de navegación de Admin*/
+.NavBarAdmin button {
+    border-radius: 30px; /* Bordes redondeados */
+    height: 50px; /* Altura del botón */
+    width: 100px; /* Ancho del botón */
+    border: 1px solid rgb(255, 255, 255); /* Borde del botón */
+    margin-top: 10px; /* Margen superior */
+    margin-bottom: 10px; /* Margen inferior */
+    margin-left:30px ;
+    background-color: black; /* Color de fondo */
+    color: white; /* Color del texto */
+    font-size: 19px; /* Tamaño de la fuente */
+}
+
+/* Estilos para los encabezados dentro de la barra de navegación de administracion */
+.NavBarAdmin h1 {
+    color: white; /* Color del texto */
+}
+
+/* Estilos para el cuerpo principal */
+.cuerpoPrincipal {
+	grid-area: 2 / 2 / 6 / 6; /* Área de la cuadrícula que ocupa */
+	position: relative; /* Posición relativa */
+	height: 100%; /* Altura completa */
+}
+
+/* Estilos para el cuerpo de administracion */
+.cuerpoAdmin{
+    grid-area: 2 / 2 / 6 / 6; /* Área de la cuadrícula que ocupa */
+    position: relative; /* Posición relativa */
+    height: 100%; /* Altura completa */
+}
+/* Estilos para el fondo desenfocado */
+.background-blur {
+	background-image: url("./img/ocio-nocturno-asturias-scaled.jpg.webp"); /*Imagen de fondo*/
+	background-size: cover; /* Cubrir todo el contenedor */
+	background-position: center; /* Centrar la imagen */
+	background-repeat: no-repeat; /* No repetir la imagen */
+	filter: blur(2px); /* Aplicar desenfoque */
+	position: absolute; /* Posición absoluta */
+	top: 0; /* Posición superior */
+	left: 0; /* Posición izquierda */
+	width: 100%; /* Ancho completo */
+	height: 100%; /* Altura completa */
+	z-index: 1; /* Nivel de apilamiento */
+}
+
+/* Estilos para el fondo de administracion */
+.backgroundAdmin{
+    grid-area: 2 / 2 / 6 / 6; /* Área de la cuadrícula que ocupa */
+    background-size: cover; /* Cubrir todo el contenedor */
+    background-color: black; /* Color de fondo */
+    top: 0; /* Posición superior */
+    left: 0; /* Posición izquierda */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    z-index: 1; /* Nivel de apilamiento */
+}
+
+.activeScreenAdmin{
+    grid-area: 2 / 2 / 6 / 6; /* Área de la cuadrícula que ocupa */
+    background-size: cover; /* Cubrir todo el contenedor */
+    background-color: rgb(49, 49, 49); /* Color de fondo */
+    top: 0; /* Posición superior */
+    left: 0; /* Posición izquierda */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    z-index: 1; /* Nivel de apilamiento */
+}
+
+/* Estilos para el fondo de administracion */
+.backgroundAdmin{
+    grid-area: 2 / 2 / 6 / 6; /* Área de la cuadrícula que ocupa */
+    background-size: cover; /* Cubrir todo el contenedor */
+    background-color: black; /* Color de fondo */
+    top: 0; /* Posición superior */
+    left: 0; /* Posición izquierda */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    z-index: 1; /* Nivel de apilamiento */
+}
+
+.activeScreenAdmin{
+    grid-area: 2 / 2 / 6 / 6; /* Área de la cuadrícula que ocupa */
+    background-size: cover; /* Cubrir todo el contenedor */
+    background-color: rgb(49, 49, 49); /* Color de fondo */
+    top: 0; /* Posición superior */
+    left: 0; /* Posición izquierda */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    z-index: 1; /* Nivel de apilamiento */
+}
+
+/* Estilos para el contenido */
+.content {
+	position: relative; /* Posición relativa */
+	z-index: 2; /* Nivel de apilamiento */
+	display: flex; /* Usa flexbox para el contenido interno */
+	text-align: center; /* Alineación del texto */
+}
+
+/* Inputs */
+.mb-3 input {
+	background-color: black;
+	color: white;
+	outline: none;
+}
+
+.mb-3 input::placeholder {
+	color: white;
+	opacity: 1;
+}
+/* para que el input no se ponga blanco al clickearlo */
+.mb-3 input:focus {
+	background-color: black;
+	color: white;
+	border-color: white;
+}
+/* Estilos para la carta de sucursal */
+.cartaSucursal {
+	height: 300px; /* Altura de la carta */
+	width: 200px; /* Ancho de la carta */
+	margin: 100px; /* Margen alrededor de la carta */
+	background-color: gray; /* Color de fondo */
+	border-radius: 20px; /* Bordes redondeados */
+	border: 2px solid black; /* Borde de la carta */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra de la carta */
+}
+
+/* Estilos para tablas de producto, alergeno y categoria*/
+.table.table-dark.table-hover th,
+.table.table-dark.table-hover td {
+  text-align: center; /* Centra el contenido horizontalmente */
+  vertical-align: middle; /* Centra el contenido verticalmente */
+}
+
+/* Estilos input de products */
+.inputsDivProductsModal input{
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+}
+
+.dropdown-menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #212529;
+    color: white;
+    border: 1px solid #333;
+    position: absolute;
+  }
+  
+  .dropdown-menu li {
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu li:hover {
+    background-color: #333;
+  }
+
+
+  .activeScreenAdmin div::-webkit-scrollbar{
+    background: #343a40; /* Color del fondo de la barra de desplazamiento */
+  }
+
+  .activeScreenAdmin div::-webkit-scrollbar-thumb{
+    background: #6c757d; /* Color del thumb de la barra de desplazamiento */
+    border-radius: 5px; /* Borde redondeado del thumb de la barra de desplazamiento */
+  }
+/*------------crear sucursal--------------*/
+/* Estilos para el popup de creación de sucursal */
+.popUpCrearUnaSucursal {
+	width: 1150px; /* Ancho del popup */
+	height: 600px; /* Alto del popup */
+	background-color: black; /* Color de fondo */
+	color: white; /* Color del texto */
+	border-radius: 10px; /* Bordes redondeados */
+	border: 2px solid white; /* Borde del popup */
+	text-align: center; /* Alineación del texto al centro */
+	display: grid; /* Usa grid para organizar el contenido */
+	grid-template-columns: repeat(3, 1fr); /* Tres columnas de igual ancho */
+	grid-template-rows: repeat(9, 1fr); /* Nueve filas de igual alto */
+	grid-column-gap: 0px; /* Espacio entre columnas */
+	grid-row-gap: 0px; /* Espacio entre filas */
+	justify-items: center; /* Justificación de los elementos en el eje horizontal */
+	align-items: center; /* Alineación de los elementos en el eje vertical */
+	gap: 10px; /* Espacio general entre los elementos */
+	padding: 20px; /* Relleno interno del popup */
+	box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2); /* Sombra alrededor del popup */
+	position: fixed; /* Posiciona el popup de forma fija en la pantalla */
+	top: 50%; /* Alineación vertical en el medio de la pantalla */
+	left: 50%; /* Alineación horizontal en el medio de la pantalla */
+	transform: translate(
+		-50%,
+		-50%
+	); /* Centra el popup utilizando transformación */
+	z-index: 1000; /* Asegura que el popup esté por encima de otros elementos */
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+/* Estilos para el encabezado dentro del popup de crear sucursal */
+.popUpCrearUnaSucursal h1 {
+	grid-column: span 3; /* El encabezado ocupa las tres columnas */
+	margin-bottom: 20px; /* Margen inferior para separar del siguiente elemento */
+}
+
+/* Estilos para el formulario dentro del popup */
+.popUpCrearUnaSucursal form {
+	display: contents; /* Mantiene el flujo de grid pero permite personalización interna */
+}
+
+/* Estilos para los campos de entrada y selección dentro del popup */
+.popUpCrearUnaSucursal input,
+.popUpCrearUnaSucursal select {
+	border-radius: 10px; /* Bordes redondeados para campos */
+	width: 100%; /* Ancho completo del contenedor */
+	background-color: black; /* Color de fondo de los campos */
+	color: white; /* Color del texto en los campos */
+	padding: 10px; /* Relleno interno de los campos */
+	border: 1px solid white; /* Borde de los campos */
+	height: 50px; /* Altura de los campos */
+	text-align: center; /* Alineación del texto en el centro */
+	align-items: center; /* Alineación de los elementos dentro del campo */
+}
+
+/* Estilos para la casilla de verificación dentro del popup */
+.popUpCrearUnaSucursal input[type="checkbox"] {
+	width: auto; /* Ancho automático para el checkbox */
+}
+
+/* Estilos para el contenedor de botones dentro del popup */
+.divBotones {
+	grid-column: span 3; /* El contenedor ocupa las tres columnas */
+	display: flex; /* Usa flexbox para organizar los botones */
+	justify-content: space-between; /* Espacio entre botones */
+	padding: 20px; /* Relleno interno */
+}
+
+/* Estilos para cada botón dentro del contenedor de botones */
+.divBotones .btn {
+	border-radius: 10px; /* Bordes redondeados para los botones */
+	padding: 10px 20px; /* Relleno interno de los botones */
+	display: flex; /* Usa flexbox para el contenido de los botones */
+	align-items: center; /* Alineación vertical de los elementos dentro del botón */
+	justify-content: center; /* Alineación horizontal de los elementos dentro del botón */
+	transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
+}
+
+/* Estilos para el botón de éxito */
+.btn-success {
+	background-color: green !important; /* Color de fondo verde */
+	color: white !important; /* Color del texto en blanco */
+}
+
+/* Estilos para el botón de peligro */
+.btn-danger {
+	background-color: red !important; /* Color de fondo rojo */
+	color: white !important; /* Color del texto en blanco */
+}
+
+/* Clases de área de la cuadrícula para el formulario de crear sucursal */
+.div1 {
+	grid-area: 1 / 1 / 2 / 4; /* Define el área en la cuadrícula */
+}
+
+.div2 {
+	grid-area: 2 / 1 / 3 / 2; /* Define el área en la cuadrícula */
+}
+
+.div3 {
+	grid-area: 3 / 1 / 4 / 2; /* Define el área en la cuadrícula */
+}
+
+.div4 {
+	grid-area: 4 / 1 / 5 / 2; /* Define el área en la cuadrícula */
+}
+
+.div5 {
+	grid-area: 5 / 1 / 6 / 2; /* Define el área en la cuadrícula */
+	display: flex; /* Usa flexbox para organizar el contenido interno */
+	align-items: center; /* Alineación vertical de los elementos internos */
+	gap: 30px; /* Espacio entre elementos internos */
+}
+
+.div6 {
+	grid-area: 2 / 2 / 3 / 3; /* Define el área en la cuadrícula */
+}
+
+.div7 {
+	grid-area: 3 / 2 / 4 / 3; /* Define el área en la cuadrícula */
+}
+
+.div8 {
+	grid-area: 4 / 2 / 5 / 3; /* Define el área en la cuadrícula */
+}
+
+.div9 {
+	grid-area: 5 / 2 / 6 / 3; /* Define el área en la cuadrícula */
+}
+
+.div10 {
+	grid-area: 6 / 2 / 7 / 3; /* Define el área en la cuadrícula */
+}
+
+.div11 {
+	grid-area: 2 / 3 / 3 / 4; /* Define el área en la cuadrícula */
+}
+
+.div12 {
+	grid-area: 3 / 3 / 4 / 4; /* Define el área en la cuadrícula */
+}
+
+.div13 {
+	grid-area: 4 / 3 / 5 / 4; /* Define el área en la cuadrícula */
+}
+
+.div14 {
+	grid-area: 5 / 3 / 6 / 4; /* Define el área en la cuadrícula */
+}
+
+.div15 {
+	grid-area: 6 / 3 / 7 / 4; /* Define el área en la cuadrícula */
+}
+
+.div16 {
+	grid-area: 7 / 2 / 9 / 3; /* Define el área en la cuadrícula */
+	width: 400px; /* Ancho fijo */
+}
+
+.div17 {
+	grid-area: 9 / 1 / 10 / 2; /* Define el área en la cuadrícula */
+}
+
+.div18 {
+	grid-area: 9 / 3 / 10 / 4; /* Define el área en la cuadrícula */
+}
+
+/*----------fin crear sucursal------------*/
+
+/*-----------cuerpo principal-------------*/
+
+/* Estilos para el modal de ver sucursal */
+.modalVerSucursal {
+	width: 600px; /* Ancho del modal */
+	height: 550px; /* Alto del modal */
+	background-color: black; /* Color de fondo */
+	color: white; /* Color del texto */
+	border-radius: 10px; /* Bordes redondeados */
+	border: 2px solid white; /* Borde del modal */
+	padding: 20px; /* Relleno interno del modal */
+	box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2); /* Sombra alrededor del modal */
+	position: fixed; /* Posiciona el modal de forma fija en la pantalla */
+	top: 50%; /* Alineación vertical en el medio de la pantalla */
+	left: 50%; /* Alineación horizontal en el medio de la pantalla */
+	transform: translate(
+		-50%,
+		-50%
+	); /* Centra el modal utilizando transformación */
+	z-index: 1000; /* Asegura que el modal esté por encima de otros elementos */
+}
+
+/* Estilos para la información dentro del modal de ver sucursal */
+.infoModalVerSucursal {
+	display: flex; /* Usa flexbox para organizar el contenido */
+	flex-direction: column; /* Organiza los elementos en una columna */
+	align-items: baseline; /* Alineación de los elementos a la línea base */
+}
+
+/* Scrollbar del aside */
+::-webkit-scrollbar {
+	width: 0.7rem;
+	background-color: rgb(40, 39, 39);
+	border-radius: 0.4rem;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: grey;
+	border-radius: 0.4rem;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: rgb(151, 151, 151);
+    cursor: pointer;
+}
+
+/*---------fin cuerpo principal-----------*/
+
+/* ====== Estilos Cards Company ========= */
+
+#cardBodyCompany {
+	transition: transform 0.3s ease, box-shadow 0.3s ease
+}
+
+#cardBodyCompany:hover {
+	transform: scale(1.1);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+} 
