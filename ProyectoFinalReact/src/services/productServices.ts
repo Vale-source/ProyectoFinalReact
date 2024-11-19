@@ -18,16 +18,15 @@ export class ProductServices extends BackendClient<ICreateProducto | IProductos 
 	  }
 
 
-      async updateProduct(id: number, data: IUpdateProducto): Promise<IProductos> {
-		const response = await fetch(`${this.baseUrl}/update/${id}`, {
+      async updateProduct(id: number, data: IUpdateProducto) {
+		await fetch(`${this.baseUrl}/update/${id}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(data),
 		});
-		const newData = await response.json();
-		return newData as IProductos;
+
 	}
 
     async getAllProductsForBranch(id: number): Promise<IProductos[]> {

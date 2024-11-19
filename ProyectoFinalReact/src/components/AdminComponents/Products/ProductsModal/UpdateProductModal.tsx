@@ -44,7 +44,6 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
     product.alergenos.map((alergeno) => alergeno.id)
   );
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const productService = new ProductServices(
     "http://190.221.207.224:8090/articulos"
@@ -100,7 +99,6 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
 
   const handleSave = async () => {
     setLoading(true);
-    setError(null);
     if (
       !values.denominacion ||
       !values.precioVenta ||
@@ -143,8 +141,8 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
       await productService.updateProduct(values.id, updatedProduct);
       onClose();
       fetchProducts();
-    } catch (err) {
-      setError("Hubo un error al editar el producto.");
+    } catch (error) {
+      console.error("Error al actualizar el producto:", error);
     } finally {
       setLoading(false);
     }
@@ -362,9 +360,6 @@ const UpdateProductModal: React.FC<EditProductModalProps> = ({
             </div>
           </div>
         </div>
-
-        {error && <div style={{ color: "red" }}>{error}</div>}
-
         <div
           style={{
             display: "flex",

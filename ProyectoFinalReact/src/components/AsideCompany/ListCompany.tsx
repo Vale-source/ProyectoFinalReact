@@ -12,7 +12,7 @@ export const ListCompany = ({ company, refreshCompanyList }: { company: IEmpresa
 
 	useEffect(() => {
 		refreshCompanyList();
-	}, [refreshCompanyList]);
+	}, []);
 
 	const handleViewClick = (company: IEmpresa) => {
 		setSelectedCompany(company);
@@ -43,7 +43,7 @@ export const ListCompany = ({ company, refreshCompanyList }: { company: IEmpresa
 						className="card"
 						key={company.id}
 						style={{
-							width: "100%",
+							width: "95%",
 							background: "#5C636A",
 							color: "white",
 							border: "2px solid black",
