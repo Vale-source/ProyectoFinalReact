@@ -8,30 +8,9 @@ import { IUpdateSucursal } from '../../../types/dtos/sucursal/IUpdateSucursal';
 import { setActiveBranch } from '../../../features/conectCompanyBranchSlice/conectCompanyBranchSlice';
 import { useNavigate } from 'react-router-dom';
 
-// Define la interfaz de tipo Sucursal para las propiedades que contendrá
-// interface Sucursal {
-//     id: number;
-//     nombreSucursal: string;
-//     selecPais: string;
-//     selecLocalidad: string;
-//     longitud: number;
-//     timeAper: string;
-//     selcProvincia: string;
-//     latitud: number;
-//     codigoPostal: number;
-//     timeCierre: string;
-//     nombreCalle: string;
-//     numeroCalle: number;
-//     numeroPiso: number;
-//     numeroDepartamento: number;
-//     urlImagen: string;
-//     habilitado: boolean;
-// }
 
-// Componente funcional CartaSucursal que recibe una sucursal como prop
 const CartaSucursal: React.FC<{ sucursal: IUpdateSucursal , sucursalConId:ISucursal }> = ({ sucursal, sucursalConId }) => {
 
-    // Estados para mostrar los popups de ver y editar sucursal
     const [showPopupVerSucursal, setShowPopupVerSucursal] = useState(false);
     const [showPopupEditarSucursal, setShowPopupEditarSucursal] = useState(false);
 

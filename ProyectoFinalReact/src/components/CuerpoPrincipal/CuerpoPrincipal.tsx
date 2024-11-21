@@ -15,7 +15,7 @@ const CuerpoPrincipal = () => {
     const idCompany = cuerpoPrincipalState.activeCompany?.id;
     const sucursales = cuerpoPrincipalState.sucursales;
 
-    const URL = "http://190.221.207.224:8090"; // Ensure this is correctly set in your environment variables
+    const URL = "http://190.221.207.224:8090"; 
     const branchServices = new BranchServices(URL + "/sucursales");
 
     const getAllSucursal = async (id: number) => {

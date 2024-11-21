@@ -7,9 +7,10 @@ import { IProductos } from "../../../../types/dtos/productos/IProductos";
 import { ICategorias } from "../../../../types/dtos/categorias/ICategorias";
 import { useAppSelector } from "../../../../hooks/hook";
 import { RootState } from "../../../../store/store";
-import ViewProductModal from "../ProductsModal/ViewProductModal";
+
 import UpdateProductModal from "../ProductsModal/UpdateProductModal";
 import Swal from "sweetalert2";
+import ViewProductModal from "../ProductsModal/viewProductModal";
 
 export const Products: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
